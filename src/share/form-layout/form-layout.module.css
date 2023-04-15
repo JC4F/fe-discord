@@ -1,0 +1,41 @@
+.contentWapper {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image {
+  width: auto;
+  height: 100%;
+  position: absolute;
+}
+
+.childrenWrapper {
+  background-color: rgb(49, 51, 56);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  font-size: 18px;
+  box-shadow: rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  box-sizing: border-box;
+  color: rgb(148, 155, 164);
+}
+
+@media (max-width: 486px) {
+  .childrenQuery {
+    height: 100%;
+  }
+}
+
+@media (min-width: 486px) {
+  .childrenQuery {
+    min-height: 580px;
+  }
+}
