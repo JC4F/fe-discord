@@ -1,12 +1,12 @@
 import { PropsWithChildren } from "react";
-import FormLayoutImage from "assest/image/form-layout.jpg";
+import { ReactComponent as FormLayoutSvg } from "assest/svg/form-layout.svg";
 import styles from "./form-layout.module.css";
 
 const FormLayout: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <>
       <div className={styles.contentWapper}>
-        <img className={styles.image} src={FormLayoutImage} alt="form-layout" />
+        <FormLayoutSvg className={styles.svg} />
         <div className={`${styles.childrenWrapper} ${styles.childrenQuery}`}>
           {children}
         </div>
