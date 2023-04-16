@@ -1,6 +1,6 @@
 import { PropsWithChildren } from "react";
 import { ReactComponent as FormLayoutSvg } from "assest/svg/form-layout.svg";
-import styles from "./form-layout.module.css";
+import styles from "./index.module.css";
 
 const FormLayout: React.FC<PropsWithChildren> = ({ children }) => {
   return (

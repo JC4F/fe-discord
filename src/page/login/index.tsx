@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import FormLayout from "share/form-layout/form-layout";
+import FormLayout from "share/form-layout";
 
 const Login: React.FC = () => {
   return (
