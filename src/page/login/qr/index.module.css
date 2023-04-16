@@ -1,0 +1,52 @@
+.qrWrapper {
+  position: relative;
+  overflow: hidden;
+  width: 240px;
+  height: 344px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 830px) {
+  .qrWrapper {
+    display: none;
+  }
+}
+
+.customQr {
+  width: 176px;
+  height: 176px;
+  margin-bottom: 32px;
+  border-radius: 5px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+}
+
+.qrWrapper h2,
+.qrWrapper p {
+  text-align: center;
+}
+
+.qrWrapper h2 {
+  font-weight: 600;
+  margin-bottom: 8px;
+  font-size: 24px;
+  line-height: 30px;
+  color: var(--header-primary);
+}
+
+.qrWrapper p {
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 400;
+  color: var(--header-secondary);
+}
+
+.qrWrapper strong {
+  font-weight: 600;
+}

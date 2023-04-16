@@ -30,7 +30,7 @@
   color: rgb(148, 155, 164);
   /* perspective: 200px; */
   animation: pageIn 0.6s ease;
-  width: 400px;
+  /* width: 400px; */
 }
 
 .childrenWrapperOut {
@@ -40,12 +40,13 @@
 @media (max-width: 486px) {
   .childrenQuery {
     height: 100%;
+    width: 100%;
   }
 }
 
 @media (min-width: 486px) {
   .childrenQuery {
-    min-height: 580px;
+    min-height: 200px;
   }
 }
 

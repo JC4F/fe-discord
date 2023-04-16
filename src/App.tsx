@@ -5,6 +5,7 @@ import NotFound from "page/not-found";
 import Register from "page/register";
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+import "./App.css";
 
 const App: React.FC = () => {
   return (
