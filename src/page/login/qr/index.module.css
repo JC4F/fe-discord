@@ -24,6 +24,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.customQr:has(canvas) {
   background-color: #fff;
 }
 
