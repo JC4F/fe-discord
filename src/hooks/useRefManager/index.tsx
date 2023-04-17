@@ -4,11 +4,14 @@ interface IParam<T> {
 }
 export const useRefManager = <T,>({ defaultValue }: IParam<T>) => {
   const componentRef = React.useRef<T>(defaultValue);
-  const setRef = (name: keyof T) => (ref: any) => {
-    componentRef.current[name] = ref;
-  };
-  const getRef = <P extends keyof T = keyof T>(name: P) => {
+  const setRef = React.useCallback(
+    (name: keyof T) => (ref: any) => {
+      componentRef.current[name] = ref;
+    },
+    [],
+  );
+  const getRef = React.useCallback(<P extends keyof T = keyof T>(name: P) => {
     return componentRef.current[name];
-  };
+  }, []);
   return { componentRef: componentRef.current, setRef, getRef };
 };

@@ -7,5 +7,11 @@
   --text-normal: rgb(219, 222, 225);
   --input-background: rgb(30, 31, 34);
   --text-link: rgb(0, 168, 252);
+  --interactive-normal: rgb(181, 186, 193);
+  --background-tertiary: rgb(30, 31, 34);
+  --background-secondary: rgb(43, 45, 49);
   --background-modifier-accent: rgba(78, 80, 88, 0.48);
+  --background-modifier-hover: rgba(78, 80, 88, 0.29);
+  --background-modifier-selected: rgba(78, 80, 88, 0.6);
+  --scrollbar-thin-thumb: rgba(26, 27, 30, 1);
 }

@@ -1,0 +1,53 @@
+@media (max-width: 486px) {
+  .formWrapper {
+    width: 100%;
+  }
+}
+
+@media (min-width: 486px) {
+  .formWrapper {
+    width: 416px;
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.header h1 {
+  color: rgb(242, 243, 245);
+  font-weight: 600;
+  margin-bottom: 8px;
+  font-size: 24px;
+  line-height: 30px;
+}
+
+.button {
+  width: 100%;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 24px;
+  height: 44px;
+  min-width: 130px;
+  min-height: 44px;
+}
+
+.login {
+  margin-top: 8px;
+  font-size: 14px;
+  line-height: 16px;
+}
+
+.customLink {
+  color: var(--text-link);
+  text-decoration: none;
+  padding-left: 4px;
+}
+
+.customLink:hover {
+  text-decoration: underline;
+}
