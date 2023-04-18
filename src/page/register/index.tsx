@@ -12,6 +12,8 @@ interface IRegisterRef {
   emailRef: HTMLInputElement | null;
   usernamelRef: HTMLInputElement | null;
   passwordRef: HTMLInputElement | null;
+  dateOfBirthRef: any;
+  isRecieveEmail: HTMLButtonElement | null;
   errorMessage: {
     email: string | null;
     password: string | null;
@@ -22,6 +24,8 @@ const initRegisterRef: IRegisterRef = {
   emailRef: null,
   usernamelRef: null,
   passwordRef: null,
+  dateOfBirthRef: null,
+  isRecieveEmail: null,
   errorMessage: {
     email: null,
     password: null,
@@ -32,6 +36,20 @@ const Register: React.FC = () => {
   const { getRef, setRef } = useRefManager<IRegisterRef>({
     defaultValue: initRegisterRef,
   });
+
+  const handleOnclickButtonSubmit = () => {
+    // check validate
+
+    const submitData = {
+      email: getRef("emailRef")?.value,
+      username: getRef("usernamelRef")?.value,
+      password: getRef("passwordRef")?.value,
+      date: getRef("dateOfBirthRef").getDate(),
+      isRecieveEmail: getRef("isRecieveEmail")?.querySelector("input")?.checked,
+    };
+
+    console.log("check sumit data: ", submitData);
+  };
 
   return (
     <FormLayout>
@@ -60,14 +78,21 @@ const Register: React.FC = () => {
           errorMessage={getRef("errorMessage").password}
           ref={setRef("passwordRef")}
         />
-        <GroupDate />
+        <GroupDate ref={setRef("dateOfBirthRef")} />
         <div className={styles.checkBoxWrapper}>
-          <Checkbox className={styles.customChecbox} />
+          <Checkbox
+            className={styles.customChecbox}
+            ref={setRef("isRecieveEmail")}
+          />
           <div className={styles.checkBoxDiscription}>
             {RegisterMessage.CHECKBOX_EMAIL}
           </div>
         </div>
-        <Button variant="contained" className={styles.button}>
+        <Button
+          variant="contained"
+          className={styles.button}
+          onClick={handleOnclickButtonSubmit}
+        >
           Tiep tuc
         </Button>
         <p className={styles.login}>

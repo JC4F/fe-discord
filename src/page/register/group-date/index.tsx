@@ -78,7 +78,7 @@ const yearList: ISelected[] = ((startYear = 1871, currentYear = 2020) => {
   return yearTmp;
 })();
 
-const GroupDate = React.forwardRef<any, IGroupDateProps>((ref) => {
+const GroupDate = React.forwardRef<any, IGroupDateProps>((props, ref) => {
   const [groupDateState, setGroupDateState] =
     React.useState<IGroupDateState>(initGroupDateState);
 
@@ -124,6 +124,19 @@ const GroupDate = React.forwardRef<any, IGroupDateProps>((ref) => {
       groupDateState.year;
     return !isValidDate(date);
   }, [groupDateState, conStrucDayMonth]);
+
+  React.useImperativeHandle(ref, () => ({
+    getDate() {
+      if (isError) return "";
+      return (
+        conStrucDayMonth(groupDateState.month) +
+        "/" +
+        conStrucDayMonth(groupDateState.day) +
+        "/" +
+        groupDateState.year
+      );
+    },
+  }));
 
   return (
     <div className={styles.groupDateWrapper}>
