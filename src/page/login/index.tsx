@@ -52,10 +52,6 @@ const Login: React.FC = () => {
 
     for (const key in submitData) {
       if (Object.prototype.hasOwnProperty.call(submitData, key)) {
-        // setRef("errorMessage")({
-        //   ...getRef("errorMessage"),
-        //   [key]: submitData[key] === "" ? LoginErrorMessage.REQUIRE : "",
-        // });
         setLoginState((pre) => ({
           ...pre,
           errorMessage: {
@@ -67,8 +63,6 @@ const Login: React.FC = () => {
         if (submitData[key] === "") isError = true;
       }
     }
-
-    // console.log(">>check error: ", getRef("errorMessage"));
 
     if (isError) return;
 

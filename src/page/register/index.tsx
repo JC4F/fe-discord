@@ -5,8 +5,17 @@ import FormLayout from "share/form-layout";
 import InputForm from "share/input";
 import styles from "./index.module.css";
 import { Button, Checkbox } from "@mui/material";
-import { RegisterMessage } from "constant";
+import { RegisterErrorMessage, RegisterMessage } from "constant";
 import GroupDate from "./group-date";
+
+interface IRegisterState {
+  errorMessage: {
+    email: string;
+    username: string;
+    password: string;
+    birth: string;
+  };
+}
 
 interface IRegisterRef {
   emailRef: HTMLInputElement | null;
@@ -14,11 +23,16 @@ interface IRegisterRef {
   passwordRef: HTMLInputElement | null;
   dateOfBirthRef: any;
   isRecieveEmail: HTMLButtonElement | null;
-  errorMessage: {
-    email: string;
-    password: string;
-  };
 }
+
+const initRegisterState: IRegisterState = {
+  errorMessage: {
+    email: "",
+    username: "",
+    password: "",
+    birth: "",
+  },
+};
 
 const initRegisterRef: IRegisterRef = {
   emailRef: null,
@@ -26,27 +40,42 @@ const initRegisterRef: IRegisterRef = {
   passwordRef: null,
   dateOfBirthRef: null,
   isRecieveEmail: null,
-  errorMessage: {
-    email: "",
-    password: "",
-  },
 };
 
 const Register: React.FC = () => {
+  const [registerState, setRegistertate] =
+    React.useState<IRegisterState>(initRegisterState);
+
   const { getRef, setRef } = useRefManager<IRegisterRef>({
     defaultValue: initRegisterRef,
   });
 
   const handleOnclickButtonSubmit = () => {
     // check validate
-
-    const submitData = {
+    let isError: boolean = false;
+    const submitData: Record<string, any> = {
       email: getRef("emailRef")?.value,
       username: getRef("usernamelRef")?.value,
       password: getRef("passwordRef")?.value,
       date: getRef("dateOfBirthRef").getDate(),
       isRecieveEmail: getRef("isRecieveEmail")?.querySelector("input")?.checked,
     };
+
+    for (const key in submitData) {
+      if (Object.prototype.hasOwnProperty.call(submitData, key)) {
+        setRegistertate((pre) => ({
+          ...pre,
+          errorMessage: {
+            ...pre.errorMessage,
+            [key]: submitData[key] === "" ? RegisterErrorMessage.REQUIRE : "",
+          },
+        }));
+
+        if (submitData[key] === "") isError = true;
+      }
+    }
+
+    if (isError) return;
 
     console.log("check sumit data: ", submitData);
   };
@@ -61,21 +90,21 @@ const Register: React.FC = () => {
           labelMessage="EMAIL"
           inputType="text"
           isRequired
-          errorMessage={getRef("errorMessage").email}
+          errorMessage={registerState.errorMessage.email}
           ref={setRef("emailRef")}
         />
         <InputForm
           labelMessage="TEN DANG NHAP"
           inputType="text"
           isRequired
-          errorMessage={getRef("errorMessage").password}
+          errorMessage={registerState.errorMessage.password}
           ref={setRef("usernamelRef")}
         />
         <InputForm
           labelMessage="MAT KHAU"
           inputType="password"
           isRequired
-          errorMessage={getRef("errorMessage").password}
+          errorMessage={registerState.errorMessage.password}
           ref={setRef("passwordRef")}
         />
         <GroupDate ref={setRef("dateOfBirthRef")} />
