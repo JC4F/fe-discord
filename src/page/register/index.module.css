@@ -64,7 +64,7 @@
 .customChecbox {
   width: 24px;
   height: 24px;
-  margin-right: 16px;
+  margin-right: 16px !important;
 }
 
 .checkBoxDiscription {

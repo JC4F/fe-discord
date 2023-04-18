@@ -28,6 +28,7 @@ interface IInputSelectRef {
   selectWrapperRef: HTMLDivElement | null;
   inputWrapperRef: HTMLDivElement | null;
   lastCorrectSelectRef: string;
+  isPreventClickAfterBlurRef: boolean;
 }
 
 interface ICalculateHoverValue {
@@ -53,6 +54,7 @@ const InputSelect = React.forwardRef<
       selectWrapperRef: null,
       inputWrapperRef: null,
       lastCorrectSelectRef: "",
+      isPreventClickAfterBlurRef: false,
     },
   });
 
@@ -68,13 +70,15 @@ const InputSelect = React.forwardRef<
         inputValue: firstSelect.representedValue,
       }));
     }
-  }, [selectData, selected, setRef]);
+  }, [selectData, selected]);
 
   React.useEffect(() => {
     if (inputSelectState.isSelectOpen) {
       getRef("inputWrapperRef")?.querySelector("input")?.focus();
-    } else getRef("inputWrapperRef")?.querySelector("input")?.blur();
-  }, [inputSelectState.isSelectOpen, getRef]);
+    } else {
+      getRef("inputWrapperRef")?.querySelector("input")?.blur();
+    }
+  }, [inputSelectState.isSelectOpen]);
 
   const curSelectData: ISelected[] = React.useMemo(() => {
     if (inputSelectState.isShowFull) return selectData;
@@ -102,12 +106,7 @@ const InputSelect = React.forwardRef<
           behavior: "auto",
         });
     }
-  }, [
-    inputSelectState.isShowFull,
-    inputSelectState.hoverValue,
-    getRef,
-    curSelectData,
-  ]);
+  }, [inputSelectState.isShowFull, inputSelectState.hoverValue, curSelectData]);
 
   React.useEffect(() => {
     if (!inputSelectState.isSelectOpen) {
@@ -145,6 +144,12 @@ const InputSelect = React.forwardRef<
   const handleOnClickInputWrapper = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
   ) => {
+    console.log(getRef("isPreventClickAfterBlurRef"));
+    if (getRef("isPreventClickAfterBlurRef")) {
+      e.preventDefault();
+      return;
+    }
+
     console.log("go click input wrapper");
     setInputSelectState({
       ...inputSelectState,
@@ -166,6 +171,21 @@ const InputSelect = React.forwardRef<
     });
   };
 
+  const handleOnMouseDownSvg = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+  ) => {
+    console.log(">>check svg");
+    if (inputSelectState.isSelectOpen)
+      setRef("isPreventClickAfterBlurRef")(true);
+    else setRef("isPreventClickAfterBlurRef")(false);
+  };
+
+  const handleOnMouseDownInput = (
+    e: React.MouseEvent<HTMLInputElement, MouseEvent>,
+  ) => {
+    setRef("isPreventClickAfterBlurRef")(false);
+  };
+
   const handleOnMouseEnterSelectItem = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
   ) => {
@@ -175,7 +195,7 @@ const InputSelect = React.forwardRef<
     });
   };
 
-  const handleOnBlurInputWrapper = () => {
+  const handleOnBlurInput = () => {
     console.log("go blur input wrapper");
     let curSelectTmp: ISelected | undefined = selectData.find(
       (cur) => cur.representedValue === inputSelectState.inputValue,
@@ -212,7 +232,7 @@ const InputSelect = React.forwardRef<
     console.log("handle key down input");
     if (e.key === "Enter" || e.key === "Tab") {
       e.preventDefault();
-      // handleOnBlurInputWrapper();
+      // handleOnBlurInput();
       let curSelectTmp: ISelected | undefined = selectData.find(
         (cur) => cur.representedValue === inputSelectState.hoverValue,
       );
@@ -334,7 +354,6 @@ const InputSelect = React.forwardRef<
         className={styles.inputWrapper}
         onClick={handleOnClickInputWrapper}
         ref={setRef("inputWrapperRef")}
-        data-inputwapper="0"
       >
         <input
           type="text"
@@ -342,11 +361,12 @@ const InputSelect = React.forwardRef<
           className={styles.input}
           placeholder={placeholder}
           value={inputSelectState.inputValue}
+          onMouseDown={handleOnMouseDownInput}
           onChange={handleOnChangeInput}
-          onBlur={handleOnBlurInputWrapper}
+          onBlur={handleOnBlurInput}
           onKeyDown={handleOnKeyDownInput}
         />
-        <div className={styles.svgWrapper}>
+        <div className={styles.svgWrapper} onMouseDown={handleOnMouseDownSvg}>
           <ArrowDown className={styles.customSvg} />
         </div>
       </div>
