@@ -8,21 +8,20 @@
 
 .selecteWrapper {
   position: absolute;
-  bottom: 98%;
+  bottom: 100%;
   background-color: var(--background-secondary);
   border-radius: 0px 0px 4px 4px;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 0px 1px,
     rgba(0, 0, 0, 0.1) 0px 4px 11px;
   margin-bottom: -1px;
-  margin-top: -1px;
-  position: absolute;
+  /* margin-top: -1px; */
   width: 100%;
   z-index: 1;
   box-sizing: border-box;
   border: 1px solid var(--background-tertiary);
   color: var(--interactive-normal);
 
-  max-height: 215px;
+  max-height: 227px;
   overflow-y: auto;
   padding: 0px;
 }
@@ -39,6 +38,7 @@
   flex-wrap: wrap;
   justify-content: space-between;
   min-height: 40px;
+  z-index: 2;
 }
 
 .selectItem {
