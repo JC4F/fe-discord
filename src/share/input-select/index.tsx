@@ -110,14 +110,21 @@ const InputSelect = React.forwardRef<
 
   React.useEffect(() => {
     if (!inputSelectState.isSelectOpen) {
-      setInputSelectState((pre) => {
-        return {
-          ...pre,
-          hoverValue: curSelectData[0]?.representedValue ?? "",
-        };
-      });
+      setInputSelectState((pre) => ({
+        ...pre,
+        hoverValue: pre.inputValue || curSelectData[0]?.representedValue,
+      }));
+    } else if (inputSelectState.isSelectOpen && !inputSelectState.isShowFull) {
+      setInputSelectState((pre) => ({
+        ...pre,
+        hoverValue: curSelectData[0]?.representedValue || "",
+      }));
     }
-  }, [inputSelectState.isSelectOpen, curSelectData]);
+  }, [
+    inputSelectState.isSelectOpen,
+    inputSelectState.isShowFull,
+    curSelectData,
+  ]);
 
   const handleOnChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     // save last correct ref for blur?, find exact
