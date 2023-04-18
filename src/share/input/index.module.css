@@ -25,3 +25,8 @@
   background-color: var(--input-background);
   border: none;
 }
+
+.required {
+  color: var(--status-danger);
+  padding-left: 4px;
+}

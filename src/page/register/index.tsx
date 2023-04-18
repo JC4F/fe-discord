@@ -15,8 +15,8 @@ interface IRegisterRef {
   dateOfBirthRef: any;
   isRecieveEmail: HTMLButtonElement | null;
   errorMessage: {
-    email: string | null;
-    password: string | null;
+    email: string;
+    password: string;
   };
 }
 
@@ -27,8 +27,8 @@ const initRegisterRef: IRegisterRef = {
   dateOfBirthRef: null,
   isRecieveEmail: null,
   errorMessage: {
-    email: null,
-    password: null,
+    email: "",
+    password: "",
   },
 };
 

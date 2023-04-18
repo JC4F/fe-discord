@@ -11,8 +11,8 @@ interface ILoginRef {
   emailRef: HTMLInputElement | null;
   passwordRef: HTMLInputElement | null;
   errorMessage: {
-    email: string | null;
-    password: string | null;
+    email: string;
+    password: string;
   };
 }
 
@@ -20,8 +20,8 @@ const initLoginRef: ILoginRef = {
   emailRef: null,
   passwordRef: null,
   errorMessage: {
-    email: null,
-    password: null,
+    email: "",
+    password: "",
   },
 };
 

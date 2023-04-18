@@ -5,7 +5,7 @@ interface IProps {
   labelMessage: string;
   inputType: string;
   isRequired: boolean;
-  errorMessage: string | null;
+  errorMessage: string;
 }
 
 const InputForm = React.forwardRef<HTMLInputElement, IProps>(
@@ -13,15 +13,15 @@ const InputForm = React.forwardRef<HTMLInputElement, IProps>(
     return (
       <div
         className={`${styles.inputWrapper} ${
-          errorMessage !== null ? "" : styles.redError
+          errorMessage ? styles.redError : ""
         }`}
       >
         <label className={styles.label}>
           {labelMessage}
-          {isRequired && errorMessage === undefined && (
+          {isRequired && errorMessage === "" && (
             <span className={styles.required}>*</span>
           )}
-          {errorMessage !== null && (
+          {errorMessage !== "" && (
             <>
               <span className={styles.seperator}>-</span>
               <span className={styles.error}>{errorMessage}</span>
