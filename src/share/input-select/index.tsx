@@ -127,6 +127,8 @@ const InputSelect = React.forwardRef<
   ]);
 
   const handleOnChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value.length === 0) return;
+
     // save last correct ref for blur?, find exact
     const curSelectTmp: ISelected | undefined = selectData.find(
       (cur) =>
