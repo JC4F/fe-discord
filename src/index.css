@@ -2,11 +2,13 @@
 
 :root {
   --text-danger: rgb(250, 119, 124);
+  --text-link: rgb(0, 168, 252);
+  --text-normal: rgb(219, 222, 225);
+  --text-muted: rgb(148, 155, 164);
+  --status-danger: rgb(242, 63, 66);
   --header-primary: rgb(242, 243, 245);
   --header-secondary: rgb(181, 196, 183);
-  --text-normal: rgb(219, 222, 225);
   --input-background: rgb(30, 31, 34);
-  --text-link: rgb(0, 168, 252);
   --interactive-normal: rgb(181, 186, 193);
   --background-tertiary: rgb(30, 31, 34);
   --background-secondary: rgb(43, 45, 49);

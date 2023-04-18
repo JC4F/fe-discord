@@ -4,8 +4,9 @@ import { useRefManager } from "hooks";
 import FormLayout from "share/form-layout";
 import InputForm from "share/input";
 import styles from "./index.module.css";
-import { Button } from "@mui/material";
-import InputSelect, { ISelected } from "share/input-select";
+import { Button, Checkbox } from "@mui/material";
+import { RegisterMessage } from "constant";
+import GroupDate from "./group-date";
 
 interface IRegisterRef {
   emailRef: HTMLInputElement | null;
@@ -26,21 +27,6 @@ const initRegisterRef: IRegisterRef = {
     password: null,
   },
 };
-
-const dummys: ISelected[] = [
-  { representedValue: "Thang 1", realValue: "1" },
-  { representedValue: "Thang 2", realValue: "2" },
-  { representedValue: "Thang 3", realValue: "3" },
-  { representedValue: "Thang 4", realValue: "4" },
-  { representedValue: "Thang 5", realValue: "5" },
-  { representedValue: "Thang 6", realValue: "6" },
-  { representedValue: "Thang 7", realValue: "7" },
-  { representedValue: "Thang 8", realValue: "8" },
-  { representedValue: "Thang 9", realValue: "9" },
-  { representedValue: "Thang 10", realValue: "10" },
-  { representedValue: "Thang 11", realValue: "11" },
-  { representedValue: "Thang 12", realValue: "12" },
-];
 
 const Register: React.FC = () => {
   const { getRef, setRef } = useRefManager<IRegisterRef>({
@@ -74,8 +60,13 @@ const Register: React.FC = () => {
           errorMessage={getRef("errorMessage").password}
           ref={setRef("passwordRef")}
         />
-        <InputSelect placeholder="Thang" selectData={dummys} />
-        {/* button nhap email */}
+        <GroupDate />
+        <div className={styles.checkBoxWrapper}>
+          <Checkbox className={styles.customChecbox} />
+          <div className={styles.checkBoxDiscription}>
+            {RegisterMessage.CHECKBOX_EMAIL}
+          </div>
+        </div>
         <Button variant="contained" className={styles.button}>
           Tiep tuc
         </Button>
