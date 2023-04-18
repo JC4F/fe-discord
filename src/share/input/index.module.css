@@ -30,3 +30,12 @@
   color: var(--status-danger);
   padding-left: 4px;
 }
+
+.seperator {
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+.redError {
+  color: var(--text-danger);
+}

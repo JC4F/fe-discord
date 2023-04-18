@@ -1,1 +1,2 @@
-export * from "./utils-date.ts";
+export * from "./utils-date";
+export * from "./utils-object";

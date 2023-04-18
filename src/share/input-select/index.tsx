@@ -170,7 +170,7 @@ const InputSelect = React.forwardRef<
   const handleClickSelectItem = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
   ) => {
-    setRef("lastCorrectSelectRef")((e.target as HTMLElement).textContent);
+    setRef("lastCorrectSelectRef")((e.target as HTMLElement).textContent ?? "");
     console.log("go blur click select item");
     setInputSelectState({
       ...inputSelectState,
