@@ -33,9 +33,9 @@
   font-weight: 400;
 }
 
-.forgot {
-  margin-bottom: 20px;
-  margin-top: -15px;
+.forgot,
+.ssoLink {
+  display: table;
   color: var(--text-link);
   padding: 2px 0px;
   font-size: 14px;
@@ -44,7 +44,13 @@
   cursor: pointer;
 }
 
-.forgot:hover {
+.forgot {
+  margin-bottom: 20px;
+  margin-top: -15px;
+}
+
+.forgot:hover,
+.ssoLink:hover {
   text-decoration: underline;
 }
 
