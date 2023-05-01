@@ -2,7 +2,7 @@ import React from "react";
 interface IParam<T> {
   defaultValue: T;
 }
-export const useRefManager = <T,>({ defaultValue }: IParam<T>) => {
+export const useRefManager = <T>({ defaultValue }: IParam<T>) => {
   const componentRef = React.useRef<T>(defaultValue);
   const setRef = React.useCallback(
     <P extends keyof T = keyof T>(name: P) =>
