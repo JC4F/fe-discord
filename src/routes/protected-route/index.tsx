@@ -11,7 +11,7 @@ export const ProtectedRoute: React.FC<IProtectedRouteProps> = ({
   component: Component,
   ...routeProps
 }) => {
-  const user = useAppSelector((state) => state.authen.user);
+  const user = useAppSelector((state) => state.authen.user.accessToken);
   if (!user) {
     return <Navigate to="/login" />;
   }

@@ -42,15 +42,6 @@ const Login: React.FC = () => {
     defaultValue: initLoginRef,
   });
 
-  const handleClickLoginSSO = React.useCallback(() => {
-    // window.location.origin ~ http://localhost:3000
-    if (process.env.REACT_APP_BACKEND_SSO_URL) {
-      const targetUrl = `${process.env.REACT_APP_BACKEND_SSO_URL}/login?redirectUrl=${window.location.origin}`;
-      console.log("targetUrl: ", targetUrl);
-      window.location.href = targetUrl;
-    }
-  }, []);
-
   const handleOnclickButtonSubmit = () => {
     // check validate: required
     let isError: boolean = false;
@@ -112,9 +103,6 @@ const Login: React.FC = () => {
           <Link to="/register" className={styles.customLink}>
             Dang ki
           </Link>
-        </p>
-        <p className={styles.ssoLink} onClick={handleClickLoginSSO}>
-          Authen with SSO
         </p>
       </div>
       <div className={styles.verticalSeperator}></div>

@@ -1,21 +1,31 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { http } from "utils";
+import { IRegisterResponse } from "./type";
+
+interface IUser {
+  accessToken: string;
+}
 
 export interface IAuthenState {
-  user: any; // object identify user
+  user: IUser; // object identify user
   status: "loading" | "none";
 }
 
 const initialState: IAuthenState = {
-  user: null,
+  user: { accessToken: "" },
   status: "none",
 };
 
 export const loginAsync = createAsyncThunk(
   "authen/loginAsync",
-  async (amount: number) => {
-    // const response = await fetchCount(amount);
-    // The value we return becomes the `fulfilled` action payload
-    return null;
+  async (submitData: Record<string, any>) => {
+    const response = await http.post<IRegisterResponse>(
+      "authen/register",
+      submitData,
+    );
+    // handle response
+
+    return response.data;
   },
 );
 
@@ -24,7 +34,7 @@ export const authenSlice = createSlice({
   initialState,
   reducers: {
     logout: (state) => {
-      state.user = null;
+      state.user = { accessToken: "" };
     },
   },
   extraReducers: (builder) => {
@@ -34,11 +44,11 @@ export const authenSlice = createSlice({
       })
       .addCase(loginAsync.fulfilled, (state, action) => {
         state.status = "none";
-        state.user = action.payload;
+        state.user.accessToken = action.payload.accessToken;
       })
       .addCase(loginAsync.rejected, (state) => {
         state.status = "none";
-        state.user = null;
+        state.user = { accessToken: "" };
       });
   },
 });

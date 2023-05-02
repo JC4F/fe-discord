@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useRefManager } from "hooks";
 import FormLayout from "share/form-layout";
 import InputForm from "share/input";
@@ -7,6 +7,8 @@ import styles from "./index.module.css";
 import { Button, Checkbox } from "@mui/material";
 import { RegisterErrorMessage, RegisterMessage } from "constant";
 import GroupDate from "./group-date";
+import { useAppDispatch, useAppSelector } from "store/hooks";
+import { loginAsync } from "store/authen";
 
 interface IRegisterState {
   errorMessage: {
@@ -22,7 +24,7 @@ interface IRegisterRef {
   usernamelRef: HTMLInputElement | null;
   passwordRef: HTMLInputElement | null;
   dateOfBirthRef: any;
-  isRecieveEmail: HTMLButtonElement | null;
+  isReceiveEmail: HTMLButtonElement | null;
 }
 
 const initRegisterState: IRegisterState = {
@@ -39,18 +41,27 @@ const initRegisterRef: IRegisterRef = {
   usernamelRef: null,
   passwordRef: null,
   dateOfBirthRef: null,
-  isRecieveEmail: null,
+  isReceiveEmail: null,
 };
 
 const Register: React.FC = () => {
+  const accessToken = useAppSelector((state) => state.authen.user.accessToken);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [registerState, setRegistertate] =
     React.useState<IRegisterState>(initRegisterState);
+
+  React.useLayoutEffect(() => {
+    if (accessToken) {
+      navigate("/");
+    }
+  }, [accessToken]);
 
   const { getRef, setRef } = useRefManager<IRegisterRef>({
     defaultValue: initRegisterRef,
   });
 
-  const handleOnclickButtonSubmit = () => {
+  const handleOnclickButtonSubmit = async () => {
     // check validate
     let isError: boolean = false;
     const submitData: Record<string, any> = {
@@ -58,7 +69,7 @@ const Register: React.FC = () => {
       username: getRef("usernamelRef")?.value,
       password: getRef("passwordRef")?.value,
       date: getRef("dateOfBirthRef").getDate(),
-      isRecieveEmail: getRef("isRecieveEmail")?.querySelector("input")?.checked,
+      isReceiveEmail: getRef("isReceiveEmail")?.querySelector("input")?.checked,
     };
 
     for (const key in submitData) {
@@ -77,7 +88,7 @@ const Register: React.FC = () => {
 
     if (isError) return;
 
-    console.log("check sumit data: ", submitData);
+    await dispatch(loginAsync(submitData));
   };
 
   return (
@@ -111,7 +122,7 @@ const Register: React.FC = () => {
         <div className={styles.checkBoxWrapper}>
           <Checkbox
             className={styles.customChecbox}
-            ref={setRef("isRecieveEmail")}
+            ref={setRef("isReceiveEmail")}
           />
           <div className={styles.checkBoxDiscription}>
             {RegisterMessage.CHECKBOX_EMAIL}
