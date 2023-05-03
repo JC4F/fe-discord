@@ -1,31 +1,48 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { http } from "utils";
-import { IRegisterResponse } from "./type";
+import { IAuthenErrorResponse, IRegisterResponse } from "./type";
 
-interface IUser {
-  accessToken: string;
-}
+const initUser: IRegisterResponse = {
+  userId: "",
+  username: null,
+  email: "",
+  isVerified: false,
+  accessToken: "",
+};
 
 export interface IAuthenState {
-  user: IUser; // object identify user
+  user: IRegisterResponse; // object identify user
   status: "loading" | "none";
+  errorMess: string;
 }
 
 const initialState: IAuthenState = {
-  user: { accessToken: "" },
+  user: { ...initUser },
   status: "none",
+  errorMess: "",
 };
 
-export const loginAsync = createAsyncThunk(
-  "authen/loginAsync",
-  async (submitData: Record<string, any>) => {
-    const response = await http.post<IRegisterResponse>(
-      "authen/register",
-      submitData,
-    );
-    // handle response
-
-    return response.data;
+export const registerAsync = createAsyncThunk<
+  IRegisterResponse, // Kiểu trả về khi fulfilled
+  Record<string, any>, // Kiểu tham số truyền vào
+  {
+    rejectValue: IAuthenErrorResponse; // Kiểu trả về khi rejected với rejectWithValue
+  }
+>(
+  "authen/registerAsync",
+  async (submitData: Record<string, any>, { rejectWithValue }) => {
+    try {
+      const response = await http.post<IRegisterResponse>(
+        "authen/register",
+        submitData,
+      );
+      return response.data;
+    } catch (error: any) {
+      // if (!error.response) {
+      //   throw error;
+      // }
+      return rejectWithValue(error.response.data as IAuthenErrorResponse);
+    }
   },
 );
 
@@ -34,21 +51,23 @@ export const authenSlice = createSlice({
   initialState,
   reducers: {
     logout: (state) => {
-      state.user = { accessToken: "" };
+      state.user = { ...initUser };
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(loginAsync.pending, (state) => {
+      .addCase(registerAsync.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(loginAsync.fulfilled, (state, action) => {
+      .addCase(registerAsync.fulfilled, (state, action) => {
+        state.user = action.payload;
         state.status = "none";
-        state.user.accessToken = action.payload.accessToken;
+        state.errorMess = "";
       })
-      .addCase(loginAsync.rejected, (state) => {
+      .addCase(registerAsync.rejected, (state, action) => {
+        state.user = { ...initUser };
         state.status = "none";
-        state.user = { accessToken: "" };
+        state.errorMess = action.payload?.message ?? "Authe failed!";
       });
   },
 });

@@ -8,7 +8,7 @@ import { Button, Checkbox } from "@mui/material";
 import { RegisterErrorMessage, RegisterMessage } from "constant";
 import GroupDate from "./group-date";
 import { useAppDispatch, useAppSelector } from "store/hooks";
-import { loginAsync } from "store/authen";
+import { registerAsync } from "store/authen";
 
 interface IRegisterState {
   errorMessage: {
@@ -88,7 +88,7 @@ const Register: React.FC = () => {
 
     if (isError) return;
 
-    await dispatch(loginAsync(submitData));
+    await dispatch(registerAsync(submitData));
   };
 
   return (
