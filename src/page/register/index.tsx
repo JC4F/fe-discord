@@ -8,7 +8,7 @@ import { Button, Checkbox } from "@mui/material";
 import { RegisterErrorMessage, RegisterMessage } from "constant";
 import GroupDate from "./group-date";
 import { useAppDispatch, useAppSelector } from "store/hooks";
-import { registerAsync } from "store/authen";
+import { authenAsync } from "store/authen";
 
 interface IRegisterState {
   errorMessage: {
@@ -45,21 +45,26 @@ const initRegisterRef: IRegisterRef = {
 };
 
 const Register: React.FC = () => {
-  const accessToken = useAppSelector((state) => state.authen.user.accessToken);
+  const {
+    errorMess,
+    user: { accessToken },
+  } = useAppSelector((state) => state.authen);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
   const [registerState, setRegistertate] =
     React.useState<IRegisterState>(initRegisterState);
 
+  const { getRef, setRef } = useRefManager<IRegisterRef>({
+    defaultValue: initRegisterRef,
+  });
+
+  // check if authen => navigate home page
   React.useLayoutEffect(() => {
     if (accessToken) {
       navigate("/");
     }
   }, [accessToken]);
-
-  const { getRef, setRef } = useRefManager<IRegisterRef>({
-    defaultValue: initRegisterRef,
-  });
 
   const handleOnclickButtonSubmit = async () => {
     // check validate
@@ -88,7 +93,7 @@ const Register: React.FC = () => {
 
     if (isError) return;
 
-    await dispatch(registerAsync(submitData));
+    await dispatch(authenAsync({ type: "REGISTER", submitData }));
   };
 
   return (
@@ -97,6 +102,7 @@ const Register: React.FC = () => {
         <div className={styles.header}>
           <h1>Tao tai khoan</h1>
         </div>
+        {errorMess && <p className={styles.error}>{errorMess}</p>}
         <InputForm
           labelMessage="EMAIL"
           inputType="text"

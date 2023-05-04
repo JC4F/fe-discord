@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FormLayout from "share/form-layout";
 import styles from "./index.module.css";
 import InputForm from "share/input";
@@ -7,6 +7,8 @@ import { useRefManager } from "hooks";
 import { Button } from "@mui/material";
 import QRCode from "./qr";
 import { LoginErrorMessage } from "constant";
+import { useAppDispatch, useAppSelector } from "store/hooks";
+import { authenAsync } from "store/authen";
 
 interface ILoginState {
   errorMessage: {
@@ -34,6 +36,12 @@ const initLoginRef: ILoginRef = {
 
 const Login: React.FC = () => {
   // disable btn, input khi gọi req ~ context?
+  const {
+    errorMess,
+    user: { accessToken },
+  } = useAppSelector((state) => state.authen);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const [loginState, setLoginState] =
     React.useState<ILoginState>(initLoginState);
@@ -42,8 +50,14 @@ const Login: React.FC = () => {
     defaultValue: initLoginRef,
   });
 
-  const handleOnclickButtonSubmit = () => {
-    // check validate: required
+  // check if authen => navigate home page
+  React.useLayoutEffect(() => {
+    if (accessToken) {
+      navigate("/");
+    }
+  }, [accessToken]);
+
+  const handleOnclickButtonSubmit = async () => {
     let isError: boolean = false;
     const submitData: Record<string, any> = {
       email: getRef("emailRef")?.value,
@@ -66,7 +80,7 @@ const Login: React.FC = () => {
 
     if (isError) return;
 
-    console.log("check sumit data: ", submitData);
+    await dispatch(authenAsync({ type: "LOGIN", submitData }));
   };
 
   return (
@@ -76,6 +90,7 @@ const Login: React.FC = () => {
           <h1>Chao mung tro lai</h1>
           <p>Rat vui mung khi gap duoc gap lai ban</p>
         </div>
+        {errorMess && <p className={styles.error}>{errorMess}</p>}
         <InputForm
           labelMessage="EMAIL HOAC SO DIEN THOAI"
           inputType="text"
