@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import FormLayout from "share/form-layout";
 import styles from "./index.module.css";
 import InputForm from "share/input";
@@ -36,12 +36,8 @@ const initLoginRef: ILoginRef = {
 
 const Login: React.FC = () => {
   // disable btn, input khi gọi req ~ context?
-  const {
-    errorMess,
-    user: { accessToken },
-  } = useAppSelector((state) => state.authen);
+  const { errorMess } = useAppSelector((state) => state.authen);
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   const [loginState, setLoginState] =
     React.useState<ILoginState>(initLoginState);
@@ -49,13 +45,6 @@ const Login: React.FC = () => {
   const { getRef, setRef } = useRefManager<ILoginRef>({
     defaultValue: initLoginRef,
   });
-
-  // check if authen => navigate home page
-  React.useLayoutEffect(() => {
-    if (accessToken) {
-      navigate("/");
-    }
-  }, [accessToken]);
 
   const handleOnclickButtonSubmit = async () => {
     let isError: boolean = false;

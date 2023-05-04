@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { http } from "utils";
+import { getAndParseItemFromLocalStorage, http } from "utils";
 import {
   IAuthenErrorResponse,
   IAuthenResponse,
@@ -21,7 +21,7 @@ export interface IAuthenState {
 }
 
 const initialState: IAuthenState = {
-  user: { ...initUser },
+  user: getAndParseItemFromLocalStorage("userData") || { ...initUser },
   status: "none",
   errorMess: "",
 };
@@ -39,6 +39,9 @@ export const authenAsync = createAsyncThunk<
 
   try {
     const response = await http.post<IAuthenResponse>(postUrl, submitData);
+
+    localStorage.setItem("userData", JSON.stringify(response.data));
+
     return response.data;
   } catch (error: any) {
     if (!error.response) {
@@ -52,6 +55,9 @@ export const authenSlice = createSlice({
   name: "authen",
   initialState,
   reducers: {
+    authenFromLocalStorage: (state, action) => {
+      state.user = { ...action.payload };
+    },
     logout: (state) => {
       state.user = { ...initUser };
     },
@@ -74,5 +80,5 @@ export const authenSlice = createSlice({
   },
 });
 
-export const { logout } = authenSlice.actions;
+export const { logout, authenFromLocalStorage } = authenSlice.actions;
 export default authenSlice.reducer;

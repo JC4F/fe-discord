@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useRefManager } from "hooks";
 import FormLayout from "share/form-layout";
 import InputForm from "share/input";
@@ -45,12 +45,8 @@ const initRegisterRef: IRegisterRef = {
 };
 
 const Register: React.FC = () => {
-  const {
-    errorMess,
-    user: { accessToken },
-  } = useAppSelector((state) => state.authen);
+  const { errorMess } = useAppSelector((state) => state.authen);
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   const [registerState, setRegistertate] =
     React.useState<IRegisterState>(initRegisterState);
@@ -58,13 +54,6 @@ const Register: React.FC = () => {
   const { getRef, setRef } = useRefManager<IRegisterRef>({
     defaultValue: initRegisterRef,
   });
-
-  // check if authen => navigate home page
-  React.useLayoutEffect(() => {
-    if (accessToken) {
-      navigate("/");
-    }
-  }, [accessToken]);
 
   const handleOnclickButtonSubmit = async () => {
     // check validate

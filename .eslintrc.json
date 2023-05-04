@@ -24,7 +24,6 @@
   "rules": {
     "react/react-in-jsx-scope": ["off"],
     "react/jsx-uses-react": ["off"],
-    "react/jsx-props-no-spreading": ["warn"],
     "react/no-unescaped-entities": ["off"],
     "@typescript-eslint/explicit-function-return-type": ["off"],
     "@typescript-eslint/no-non-null-assertion": ["off"],
@@ -32,6 +31,7 @@
     "@typescript-eslint/no-confusing-void-expression": ["off"],
     "@typescript-eslint/strict-boolean-expressions": ["off"],
     "react-hooks/exhaustive-deps": ["off"],
-    "@typescript-eslint/no-misused-promises": ["off"]
+    "@typescript-eslint/no-misused-promises": ["off"],
+    "react/jsx-props-no-spreading": ["off"]
   }
 }
