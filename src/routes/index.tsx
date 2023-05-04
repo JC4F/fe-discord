@@ -7,6 +7,7 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { ProtectedRoute } from "./protected-route";
 import { ProtectedLeaveRoute } from "./protected-leave-route";
+import { SocialAuthCallback } from "page/authen-redirect";
 
 const AppRoutes: React.FC = () => {
   return (
@@ -22,6 +23,7 @@ const AppRoutes: React.FC = () => {
       />
       <Route path="/invite" element={<Invite />} />
       <Route path="*" element={<NotFound />} />
+      <Route path="/authentication/redirect" element={<SocialAuthCallback />} />
     </Routes>
   );
 };

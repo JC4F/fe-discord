@@ -35,7 +35,22 @@ export const authenAsync = createAsyncThunk<
   }
 >("authen/authenAsync", async (payload, { rejectWithValue }) => {
   const { type, submitData } = payload;
-  const postUrl = type === "LOGIN" ? "authen/login" : "authen/register";
+  let postUrl = "";
+
+  switch (type) {
+    case "REGISTER":
+      postUrl = "authen/register";
+      break;
+    case "LOGIN":
+      postUrl = "authen/login";
+      break;
+    case "SSO_GOOGLE":
+      postUrl = "authen/profile";
+      break;
+    case "SSO_FACEBOOK":
+      postUrl = "authen/profile";
+      break;
+  }
 
   try {
     const response = await http.post<IAuthenResponse>(postUrl, submitData);

@@ -90,46 +90,48 @@ const Login: React.FC = () => {
 
   return (
     <FormLayout>
-      <div className={styles.formWrapper}>
-        <div className={styles.header}>
-          <h1>Chao mung tro lai</h1>
-          <p>Rat vui mung khi gap duoc gap lai ban</p>
+      <div className={styles.childrenWrapper}>
+        <div className={styles.formWrapper}>
+          <div className={styles.header}>
+            <h1>Chao mung tro lai</h1>
+            <p>Rat vui mung khi gap duoc gap lai ban</p>
+          </div>
+          {errorMess && !getRef("haveErrorRef") && (
+            <p className={styles.error}>{errorMess}</p>
+          )}
+          <InputForm
+            labelMessage="EMAIL HOAC SO DIEN THOAI"
+            inputType="text"
+            isRequired
+            errorMessage={loginState.errorMessage.email}
+            ref={setRef("emailRef")}
+          />
+          <InputForm
+            labelMessage="MAT KHAU"
+            inputType="password"
+            isRequired
+            errorMessage={loginState.errorMessage.password}
+            ref={setRef("passwordRef")}
+          />
+          <p className={styles.forgot}>Quen mat khau?</p>
+          <Button
+            variant="contained"
+            className={styles.button}
+            disabled={status === "LOADING"}
+            onClick={handleOnclickButtonSubmit}
+          >
+            Dang nhap
+          </Button>
+          <p className={styles.register}>
+            Can mot tai khoan?
+            <Link to="/register" className={styles.customLink}>
+              Dang ki
+            </Link>
+          </p>
         </div>
-        {errorMess && !getRef("haveErrorRef") && (
-          <p className={styles.error}>{errorMess}</p>
-        )}
-        <InputForm
-          labelMessage="EMAIL HOAC SO DIEN THOAI"
-          inputType="text"
-          isRequired
-          errorMessage={loginState.errorMessage.email}
-          ref={setRef("emailRef")}
-        />
-        <InputForm
-          labelMessage="MAT KHAU"
-          inputType="password"
-          isRequired
-          errorMessage={loginState.errorMessage.password}
-          ref={setRef("passwordRef")}
-        />
-        <p className={styles.forgot}>Quen mat khau?</p>
-        <Button
-          variant="contained"
-          className={styles.button}
-          disabled={status === "LOADING"}
-          onClick={handleOnclickButtonSubmit}
-        >
-          Dang nhap
-        </Button>
-        <p className={styles.register}>
-          Can mot tai khoan?
-          <Link to="/register" className={styles.customLink}>
-            Dang ki
-          </Link>
-        </p>
+        <div className={styles.verticalSeperator}></div>
+        <QRCode />
       </div>
-      <div className={styles.verticalSeperator}></div>
-      <QRCode />
     </FormLayout>
   );
 };

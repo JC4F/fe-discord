@@ -7,7 +7,7 @@ export interface IAuthenResponse {
 }
 
 export interface IAuthenSyncParams {
-  type: "REGISTER" | "LOGIN";
+  type: "REGISTER" | "LOGIN" | "SSO_GOOGLE" | "SSO_FACEBOOK";
   submitData: Record<string, any>;
 }
 

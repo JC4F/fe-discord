@@ -1,3 +1,7 @@
+.childrenWrapper {
+  display: flex;
+}
+
 @media (max-width: 486px) {
   .formWrapper {
     width: 100%;
