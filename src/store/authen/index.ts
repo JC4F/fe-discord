@@ -16,13 +16,13 @@ const initUser: IAuthenResponse = {
 
 export interface IAuthenState {
   user: IAuthenResponse; // object identify user
-  status: "loading" | "none";
+  status: "LOADING" | "NONE";
   errorMess: string;
 }
 
 const initialState: IAuthenState = {
   user: getAndParseItemFromLocalStorage("userData") || { ...initUser },
-  status: "none",
+  status: "NONE",
   errorMess: "",
 };
 
@@ -55,6 +55,9 @@ export const authenSlice = createSlice({
   name: "authen",
   initialState,
   reducers: {
+    removeErrorMess: (state) => {
+      state.errorMess = "";
+    },
     authenFromLocalStorage: (state, action) => {
       state.user = { ...action.payload };
     },
@@ -65,20 +68,22 @@ export const authenSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(authenAsync.pending, (state) => {
-        state.status = "loading";
+        state.status = "LOADING";
+        state.errorMess = "";
       })
       .addCase(authenAsync.fulfilled, (state, action) => {
         state.user = action.payload;
-        state.status = "none";
+        state.status = "NONE";
         state.errorMess = "";
       })
       .addCase(authenAsync.rejected, (state, action) => {
         state.user = { ...initUser };
-        state.status = "none";
+        state.status = "NONE";
         state.errorMess = action.payload?.message ?? "Authen failed!";
       });
   },
 });
 
-export const { logout, authenFromLocalStorage } = authenSlice.actions;
+export const { logout, authenFromLocalStorage, removeErrorMess } =
+  authenSlice.actions;
 export default authenSlice.reducer;

@@ -136,6 +136,9 @@ const GroupDate = React.forwardRef<any, IGroupDateProps>((props, ref) => {
         groupDateState.year
       );
     },
+    resetChoosen() {
+      setGroupDateState(initGroupDateState);
+    },
   }));
 
   return (

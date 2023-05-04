@@ -8,7 +8,7 @@ import { Button } from "@mui/material";
 import QRCode from "./qr";
 import { LoginErrorMessage } from "constant";
 import { useAppDispatch, useAppSelector } from "store/hooks";
-import { authenAsync } from "store/authen";
+import { authenAsync, removeErrorMess } from "store/authen";
 
 interface ILoginState {
   errorMessage: {
@@ -20,6 +20,7 @@ interface ILoginState {
 interface ILoginRef {
   emailRef: HTMLInputElement | null;
   passwordRef: HTMLInputElement | null;
+  haveErrorRef: boolean;
 }
 
 const initLoginState: ILoginState = {
@@ -32,11 +33,12 @@ const initLoginState: ILoginState = {
 const initLoginRef: ILoginRef = {
   emailRef: null,
   passwordRef: null,
+  haveErrorRef: false,
 };
 
 const Login: React.FC = () => {
   // disable btn, input khi gọi req ~ context?
-  const { errorMess } = useAppSelector((state) => state.authen);
+  const { errorMess, status } = useAppSelector((state) => state.authen);
   const dispatch = useAppDispatch();
 
   const [loginState, setLoginState] =
@@ -46,12 +48,26 @@ const Login: React.FC = () => {
     defaultValue: initLoginRef,
   });
 
+  // remove error messages before enter page
+  React.useLayoutEffect(() => {
+    dispatch(removeErrorMess());
+  }, []);
+
+  // clear input when error
+  React.useEffect(() => {
+    if (errorMess) {
+      (getRef("emailRef") as HTMLInputElement).value = "";
+      (getRef("passwordRef") as HTMLInputElement).value = "";
+    }
+  }, [errorMess]);
+
   const handleOnclickButtonSubmit = async () => {
-    let isError: boolean = false;
     const submitData: Record<string, any> = {
       email: getRef("emailRef")?.value,
       password: getRef("passwordRef")?.value,
     };
+
+    setRef("haveErrorRef")(false);
 
     for (const key in submitData) {
       if (Object.prototype.hasOwnProperty.call(submitData, key)) {
@@ -63,11 +79,11 @@ const Login: React.FC = () => {
           },
         }));
 
-        if (submitData[key] === "") isError = true;
+        if (submitData[key] === "") setRef("haveErrorRef")(true);
       }
     }
 
-    if (isError) return;
+    if (getRef("haveErrorRef")) return;
 
     await dispatch(authenAsync({ type: "LOGIN", submitData }));
   };
@@ -79,7 +95,9 @@ const Login: React.FC = () => {
           <h1>Chao mung tro lai</h1>
           <p>Rat vui mung khi gap duoc gap lai ban</p>
         </div>
-        {errorMess && <p className={styles.error}>{errorMess}</p>}
+        {errorMess && !getRef("haveErrorRef") && (
+          <p className={styles.error}>{errorMess}</p>
+        )}
         <InputForm
           labelMessage="EMAIL HOAC SO DIEN THOAI"
           inputType="text"
@@ -98,6 +116,7 @@ const Login: React.FC = () => {
         <Button
           variant="contained"
           className={styles.button}
+          disabled={status === "LOADING"}
           onClick={handleOnclickButtonSubmit}
         >
           Dang nhap

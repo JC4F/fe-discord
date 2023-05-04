@@ -59,7 +59,13 @@ const InputSelect = React.forwardRef<
   });
 
   React.useEffect(() => {
-    if (!selected) return;
+    if (!selected) {
+      setInputSelectState((pre) => ({
+        ...pre,
+        inputValue: "",
+      }));
+      return;
+    }
     const firstSelect: ISelected | undefined = selectData.find(
       (cur) => cur.realValue === selected,
     );

@@ -8,7 +8,7 @@ import { Button, Checkbox } from "@mui/material";
 import { RegisterErrorMessage, RegisterMessage } from "constant";
 import GroupDate from "./group-date";
 import { useAppDispatch, useAppSelector } from "store/hooks";
-import { authenAsync } from "store/authen";
+import { authenAsync, removeErrorMess } from "store/authen";
 
 interface IRegisterState {
   errorMessage: {
@@ -25,6 +25,7 @@ interface IRegisterRef {
   passwordRef: HTMLInputElement | null;
   dateOfBirthRef: any;
   isReceiveEmail: HTMLButtonElement | null;
+  haveErrorRef: boolean;
 }
 
 const initRegisterState: IRegisterState = {
@@ -42,10 +43,11 @@ const initRegisterRef: IRegisterRef = {
   passwordRef: null,
   dateOfBirthRef: null,
   isReceiveEmail: null,
+  haveErrorRef: false,
 };
 
 const Register: React.FC = () => {
-  const { errorMess } = useAppSelector((state) => state.authen);
+  const { errorMess, status } = useAppSelector((state) => state.authen);
   const dispatch = useAppDispatch();
 
   const [registerState, setRegistertate] =
@@ -55,9 +57,25 @@ const Register: React.FC = () => {
     defaultValue: initRegisterRef,
   });
 
+  // remove error messages before enter page
+  React.useLayoutEffect(() => {
+    dispatch(removeErrorMess());
+  }, []);
+
+  // clear input when error
+  React.useEffect(() => {
+    if (errorMess) {
+      (getRef("emailRef") as HTMLInputElement).value = "";
+      (getRef("usernamelRef") as HTMLInputElement).value = "";
+      (getRef("passwordRef") as HTMLInputElement).value = "";
+      (
+        getRef("isReceiveEmail")?.querySelector("input") as HTMLInputElement
+      ).checked = false;
+      getRef("dateOfBirthRef").resetChoosen();
+    }
+  }, [errorMess]);
+
   const handleOnclickButtonSubmit = async () => {
-    // check validate
-    let isError: boolean = false;
     const submitData: Record<string, any> = {
       email: getRef("emailRef")?.value,
       username: getRef("usernamelRef")?.value,
@@ -65,6 +83,8 @@ const Register: React.FC = () => {
       date: getRef("dateOfBirthRef").getDate(),
       isReceiveEmail: getRef("isReceiveEmail")?.querySelector("input")?.checked,
     };
+
+    setRef("haveErrorRef")(false);
 
     for (const key in submitData) {
       if (Object.prototype.hasOwnProperty.call(submitData, key)) {
@@ -76,11 +96,11 @@ const Register: React.FC = () => {
           },
         }));
 
-        if (submitData[key] === "") isError = true;
+        if (submitData[key] === "") setRef("haveErrorRef")(true);
       }
     }
 
-    if (isError) return;
+    if (getRef("haveErrorRef")) return;
 
     await dispatch(authenAsync({ type: "REGISTER", submitData }));
   };
@@ -91,7 +111,9 @@ const Register: React.FC = () => {
         <div className={styles.header}>
           <h1>Tao tai khoan</h1>
         </div>
-        {errorMess && <p className={styles.error}>{errorMess}</p>}
+        {errorMess && !getRef("haveErrorRef") && (
+          <p className={styles.error}>{errorMess}</p>
+        )}
         <InputForm
           labelMessage="EMAIL"
           inputType="text"
@@ -126,6 +148,7 @@ const Register: React.FC = () => {
         <Button
           variant="contained"
           className={styles.button}
+          disabled={status === "LOADING"}
           onClick={handleOnclickButtonSubmit}
         >
           Tiep tuc
