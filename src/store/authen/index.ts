@@ -66,6 +66,12 @@ export const authenAsync = createAsyncThunk<
   }
 });
 
+export const logoutAsync = createAsyncThunk("logout/logoutAsync", () => {
+  void http.get("authen/logout");
+  // clear 1 cai thoi because sau con settings cac thu ?
+  localStorage.removeItem("userData");
+});
+
 export const authenSlice = createSlice({
   name: "authen",
   initialState,
@@ -73,7 +79,8 @@ export const authenSlice = createSlice({
     removeErrorMess: (state) => {
       state.errorMess = "";
     },
-    authenFromLocalStorage: (state, action) => {
+    authenWithUserDataPayload: (state, action) => {
+      localStorage.setItem("userData", JSON.stringify({ ...action.payload }));
       state.user = { ...action.payload };
     },
     logout: (state) => {
@@ -95,10 +102,15 @@ export const authenSlice = createSlice({
         state.user = { ...initUser };
         state.status = "NONE";
         state.errorMess = action.payload?.message ?? "Authen failed!";
+      })
+      .addCase(logoutAsync.fulfilled, (state, action) => {
+        state.user = { ...initUser };
+        state.status = "NONE";
+        state.errorMess = "";
       });
   },
 });
 
-export const { logout, authenFromLocalStorage, removeErrorMess } =
+export const { logout, authenWithUserDataPayload, removeErrorMess } =
   authenSlice.actions;
 export default authenSlice.reducer;

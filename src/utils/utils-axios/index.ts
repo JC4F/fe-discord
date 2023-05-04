@@ -1,5 +1,7 @@
 import axios from "axios";
+import axiosRetry from "axios-retry";
 import { store } from "store";
+import { authenWithUserDataPayload, logoutAsync } from "store/authen";
 
 // let store;
 // export const injectStore = _store => {
@@ -11,45 +13,45 @@ export const http = axios.create({
   withCredentials: true,
 });
 
+axiosRetry(http, {
+  retries: 3,
+});
+
 // Add a request interceptor
 http.interceptors.request.use(
   function (config) {
     const headerToken = store.getState().authen?.user?.accessToken ?? "";
+    console.log(">> check header token", headerToken);
     if (headerToken) {
       config.headers.Authorization = `Bearer ${headerToken}`;
     }
 
-    // Do something before request is sent
     return config;
   },
   async function (error) {
-    // Do something with request error
     return await Promise.reject(error);
   },
 );
 
-// Add a response interceptor
-// custom nhu nay thi khong biet duoc kieu type cua axios
-/*
 http.interceptors.response.use(
   function (response) {
-    // Any status code that lie within the range of 2xx cause this function to trigger
-    // Do something with response data
-    return response?.data ? response.data : response;
+    return response;
   },
-  function (err) {
-    // any status codes that falls outside the range of 2xx cause this function to trigger
-    // Do something with response error
-    // if(err.response.status === 400){
-    //   let headerToken = store.getState()?.account?.userInfo?.access_token ?? "";
-    //   if(headerToken){
-    //     err.config.headers.Authorization = `Bearer ${headerToken}`;
-    //   }
-    //   return axios.request(err.config);
-    // }
+  async function (err) {
+    if (err.response.status === 401) {
+      if (err.response.data.userData) {
+        store.dispatch(authenWithUserDataPayload(err.response.data.userData));
+        const headerToken = store.getState().authen?.user?.accessToken ?? "";
+        console.log(">> check header token2", headerToken);
+        if (headerToken) {
+          err.config.headers.Authorization = `Bearer ${headerToken}`;
+        }
+        return await http.request(err.config);
+      } else {
+        await store.dispatch(logoutAsync());
+      }
+    }
 
-    if (err?.response?.data) return err.response.data;
-    return Promise.reject(err);
+    return await Promise.reject(err);
   },
 );
-*/
