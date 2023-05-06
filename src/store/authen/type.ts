@@ -3,6 +3,10 @@ export interface IAuthenResponse {
   username: string | null;
   email: string;
   isVerified: boolean;
+  dob: string;
+  imageUrl: string;
+  phone: string | null;
+  joinDate: string;
   accessToken: string;
 }
 

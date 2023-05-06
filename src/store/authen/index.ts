@@ -12,6 +12,10 @@ const initUser: IAuthenResponse = {
   email: "",
   isVerified: false,
   accessToken: "",
+  dob: "",
+  imageUrl: "",
+  joinDate: "",
+  phone: null,
 };
 
 export interface IAuthenState {
