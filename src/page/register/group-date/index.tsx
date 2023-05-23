@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./index.module.css";
-import InputSelect, { ISelected } from "share/input-select";
+import InputSelect, { ISelected } from "share/atoms/input-select";
 import { isValidDate } from "utils";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface

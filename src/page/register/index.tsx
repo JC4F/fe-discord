@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useRefManager } from "hooks";
-import FormLayout from "share/form-layout";
-import InputForm from "share/input";
+import FormLayout from "share/atoms/form-layout";
+import InputForm from "share/atoms/input";
 import styles from "./index.module.css";
 import { Button, Checkbox } from "@mui/material";
 import { RegisterErrorMessage, RegisterMessage } from "constant";

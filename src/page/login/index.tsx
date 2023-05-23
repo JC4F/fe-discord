@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import FormLayout from "share/form-layout";
+import FormLayout from "share/atoms/form-layout";
 import styles from "./index.module.css";
-import InputForm from "share/input";
+import InputForm from "share/atoms/input";
 import { useRefManager } from "hooks";
 import { Button } from "@mui/material";
 import QRCode from "./qr";
