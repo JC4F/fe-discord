@@ -27,7 +27,7 @@ const AppRoutes: React.FC = () => {
         element={<ProtectedLeaveRoute component={<Login />} />}
       />
       <Route path="/invite" element={<Invite />} />
-      <Route path="/authentication/redirect" element={<SocialAuthCallback />} />
+      <Route path="/authen-redirect" element={<SocialAuthCallback />} />
       <Route
         path="/chanels"
         element={<ProtectedRoute component={<MainScreen />} />}

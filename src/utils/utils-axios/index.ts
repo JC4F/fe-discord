@@ -3,13 +3,8 @@ import axiosRetry from "axios-retry";
 import { store } from "store";
 import { authenWithUserDataPayload, logoutAsync } from "store/authen";
 
-// let store;
-// export const injectStore = _store => {
-//   store = _store
-// }
-
 export const http = axios.create({
-  baseURL: process.env.REACT_APP_BACKEND_URL,
+  baseURL: process.env.REACT_APP_DISCORD_BACKEND_URL,
   withCredentials: true,
 });
 

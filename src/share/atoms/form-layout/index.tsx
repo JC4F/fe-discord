@@ -9,7 +9,7 @@ const FormLayout: React.FC<PropsWithChildren> = ({ children }) => {
   const handleSSOLogin = () => {
     openCenteredPopup(
       `${
-        process.env.REACT_APP_BASE_URL ?? "http://localhost:8000/"
+        process.env.REACT_APP_DISCORD_BACKEND_URL ?? "http://localhost:3000/"
       }authen/google`,
       `Login with Goole`,
       500,
