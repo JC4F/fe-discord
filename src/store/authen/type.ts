@@ -20,3 +20,12 @@ export interface IAuthenErrorResponse {
   message: string;
   error: string;
 }
+
+export type IUserState = "ACTIVE" | "INACTIVE" | "BUSY" | "RELAX";
+
+export interface IUserSettings {
+  isMicOn: boolean;
+  isHeadPhoneOn: boolean;
+  isDarkMode: boolean;
+  userState: IUserState;
+}

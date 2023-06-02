@@ -4,6 +4,7 @@ import {
   IAuthenErrorResponse,
   IAuthenResponse,
   IAuthenSyncParams,
+  IUserSettings,
 } from "./type";
 
 const initUser: IAuthenResponse = {
@@ -18,16 +19,25 @@ const initUser: IAuthenResponse = {
   phone: null,
 };
 
+const userSettings: IUserSettings = {
+  isMicOn: true,
+  isHeadPhoneOn: true,
+  isDarkMode: false,
+  userState: "ACTIVE",
+};
+
 export interface IAuthenState {
   user: IAuthenResponse; // object identify user
   status: "LOADING" | "NONE";
   errorMess: string;
+  userSettings: IUserSettings;
 }
 
 const initialState: IAuthenState = {
   user: getAndParseItemFromLocalStorage("userData") || { ...initUser },
   status: "NONE",
   errorMess: "",
+  userSettings,
 };
 
 export const authenAsync = createAsyncThunk<
@@ -90,6 +100,15 @@ export const authenSlice = createSlice({
     logout: (state) => {
       state.user = { ...initUser };
     },
+    toggleMic: (state) => {
+      state.userSettings.isMicOn = !state.userSettings.isMicOn;
+    },
+    toggleHeadPhone: (state) => {
+      state.userSettings.isHeadPhoneOn = !state.userSettings.isHeadPhoneOn;
+    },
+    toggleDarkMode: (state) => {
+      state.userSettings.isDarkMode = !state.userSettings.isDarkMode;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -115,6 +134,12 @@ export const authenSlice = createSlice({
   },
 });
 
-export const { logout, authenWithUserDataPayload, removeErrorMess } =
-  authenSlice.actions;
+export const {
+  logout,
+  authenWithUserDataPayload,
+  removeErrorMess,
+  toggleMic,
+  toggleHeadPhone,
+  toggleDarkMode,
+} = authenSlice.actions;
 export default authenSlice.reducer;

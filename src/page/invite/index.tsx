@@ -1,5 +1,5 @@
 import React from "react";
-import FormLayout from "share/atoms/form-layout";
+import FormLayout from "share/molecules/form-layout";
 
 const Invite: React.FC = () => {
   return (

@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import FormLayout from "share/atoms/form-layout";
+import FormLayout from "share/molecules/form-layout";
 import styles from "./index.module.css";
 import InputForm from "share/atoms/input";
 import { useRefManager } from "hooks";
