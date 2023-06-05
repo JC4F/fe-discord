@@ -14,3 +14,123 @@
   white-space: nowrap;
   cursor: pointer;
 }
+
+.seperate {
+  width: 1px;
+  height: 24px;
+  margin: 0 8px;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
+  background: var(--background-modifier-accent);
+}
+
+.friendWrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex: 1;
+}
+
+.friendWrapper svg {
+  flex: 0 0 auto;
+  margin: 0 8px;
+
+  display: block;
+  width: 24px;
+  height: 24px;
+  -webkit-app-region: no-drag;
+  color: var(--channel-icon);
+}
+
+.startTitle {
+  margin: 0 8px 0 0;
+  flex: 0 0 auto;
+  min-width: auto;
+
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 600;
+  color: var(--header-primary);
+  text-overflow: ellipsis;
+}
+
+.friendState,
+.friendAction {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-width: 40px;
+  -webkit-app-region: no-drag;
+
+  border-radius: 4px;
+  margin: 0 8px;
+  padding: 2px 8px;
+
+  color: var(--interactive-normal);
+  font-size: 16px;
+  line-height: 20px;
+  cursor: pointer;
+  font-weight: 500;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.friendState:hover {
+  color: var(--interactive-hover);
+  background-color: var(--background-modifier-hover);
+}
+
+.haveNotify {
+  background-color: var(--status-danger);
+  width: 16px;
+  padding-right: 0px;
+
+  margin-left: 8px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+
+  height: 16px;
+  min-width: 16px;
+  min-height: 16px;
+  color: var(--white-500);
+  text-align: center;
+  flex: 0 0 auto;
+}
+
+.friendChoosed {
+  background-color: var(--background-modifier-selected);
+  cursor: default;
+  color: var(--interactive-active);
+}
+
+.friendAction {
+  background-color: var(--status-positive-background);
+  color: var(--status-positive-text);
+}
+
+.friendAction.friendChoosed {
+  background-color: transparent;
+  color: var(--text-positive);
+}
+
+.notifyWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.notifyWrapper svg {
+  display: block;
+  width: 24px;
+  height: 24px;
+  -webkit-app-region: no-drag;
+  color: var(--interactive-normal);
+  flex: 0 0 auto;
+  margin: 0 8px;
+  cursor: pointer;
+}

@@ -4,17 +4,24 @@
   --elevation-low: rgba(2, 2, 2, 0.2);
 
   --white-500: rgb(255, 255, 255);
+  --channel-icon: rgb(138, 132, 142);
 
   --text-danger: rgb(250, 119, 124);
   --text-link: rgb(0, 168, 252);
   --text-normal: rgb(219, 222, 225);
   --text-muted: rgb(148, 155, 164);
+  --text-positive: rgb(45, 199, 112);
+
   --status-danger: rgb(242, 63, 66);
+  --status-positive-background: rgb(36, 128, 70);
+  --status-positive-text: rgb(255, 255, 255);
   --header-primary: rgb(242, 243, 245);
   --header-secondary: rgb(181, 196, 183);
   --input-background: rgb(30, 31, 34);
+
   --interactive-normal: rgb(181, 186, 193);
   --interactive-hover: rgb(219, 222, 225);
+  --interactive-active: rgb(255, 255, 255);
 
   --brand-experiment: rgb(88, 101, 242);
   --background-secondary-alt: rgb(7, 11, 29);

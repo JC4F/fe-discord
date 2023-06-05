@@ -70,4 +70,5 @@
   color: var(--text-normal);
   border-bottom: 1px solid var(--elevation-low);
   box-sizing: border-box;
+  user-select: none;
 }
