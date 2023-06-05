@@ -1,0 +1,73 @@
+.mainLayoutWrapper {
+  display: flex;
+}
+
+.sidebarChanel {
+  width: 72px;
+  height: 100vh;
+}
+
+.nextSidebarChanel {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  width: 240px;
+  background: var(--background-secondary);
+  /* position: relative; */
+}
+
+.nextHead {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 2;
+  height: 48px;
+  border-bottom: 1px solid var(--elevation-low);
+  padding: 12px 16px;
+  box-sizing: border-box;
+
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 600;
+  color: var(--header-primary);
+  overflow: hidden scroll;
+}
+
+.nextContent {
+  flex: 1;
+}
+
+.mediaControl {
+  height: 52px;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  background-color: rgb(35, 36, 40);
+}
+
+.mainContent {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--background-primary);
+}
+
+.mainHead {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  width: 100%;
+  flex: 0 0 auto;
+  height: 48px;
+  font-weight: 600;
+  padding: 0 8px;
+  font-size: 16px;
+  line-height: 20px;
+  cursor: default;
+  z-index: 2;
+  color: var(--text-normal);
+  border-bottom: 1px solid var(--elevation-low);
+  box-sizing: border-box;
+}

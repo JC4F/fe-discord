@@ -6,8 +6,8 @@ import { ReactComponent as MicOff } from "assest/svg/mic-off-svgrepo-com.svg";
 import { ReactComponent as HeadPhoneOn } from "assest/svg/headphone-svgrepo-com.svg";
 import { ReactComponent as HeadPhoneOff } from "assest/svg/headphone-slash-svgrepo-com.svg";
 import { ReactComponent as Setting } from "assest/svg/settings-svgrepo-com.svg";
-import styles from "./index.module.css";
 import { toggleHeadPhone, toggleMic } from "store/authen";
+import styles from "./index.module.css";
 
 const MediaControl: React.FC = () => {
   const {
@@ -25,15 +25,19 @@ const MediaControl: React.FC = () => {
   return (
     <div className={styles.mediaControlWrapper}>
       <div className={styles.left}>
-        <MainButton imageUrl={imageUrl} />
+        <MainButton imageUrl={imageUrl} buttonSize="SMALL" />
         <p>{username}</p>
       </div>
       <div className={styles.right}>
-        <div onClick={handleToggleMic}>{isMicOn ? <MicOn /> : <MicOff />}</div>
-        <div onClick={handleToggleHeadPhone}>
+        <div className={styles.iconWrapper} onClick={handleToggleMic}>
+          {isMicOn ? <MicOn /> : <MicOff />}
+        </div>
+        <div className={styles.iconWrapper} onClick={handleToggleHeadPhone}>
           {isHeadPhoneOn ? <HeadPhoneOn /> : <HeadPhoneOff />}
         </div>
-        <Setting />
+        <div className={styles.iconWrapper}>
+          <Setting />
+        </div>
       </div>
     </div>
   );

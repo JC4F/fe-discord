@@ -7,13 +7,13 @@ interface IIconWrapperProps extends React.PropsWithChildren {
 
 const IconWrapper: React.FC<IIconWrapperProps> = ({ content }) => {
   return (
-    <div className={styles.iconWrapper}>
+    <>
       {typeof content === "string" ? (
         <div className={styles.contentWrapper}>{content}</div>
       ) : (
-        content
+        <div className={styles.iconWrapper}>{content}</div>
       )}
-    </div>
+    </>
   );
 };
 

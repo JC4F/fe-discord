@@ -1,0 +1,14 @@
+.sideBarWrapper {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  overflow: hidden scroll;
+  flex-direction: column;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 10px;
+  background-color: var(--background-tertiary);
+
+  padding: 12px 0 0;
+}

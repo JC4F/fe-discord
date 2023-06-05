@@ -1,6 +1,10 @@
 @import url("https://fonts.cdnfonts.com/css/gg-sans-2");
 
 :root {
+  --elevation-low: rgba(2, 2, 2, 0.2);
+
+  --white-500: rgb(255, 255, 255);
+
   --text-danger: rgb(250, 119, 124);
   --text-link: rgb(0, 168, 252);
   --text-normal: rgb(219, 222, 225);
@@ -10,6 +14,12 @@
   --header-secondary: rgb(181, 196, 183);
   --input-background: rgb(30, 31, 34);
   --interactive-normal: rgb(181, 186, 193);
+  --interactive-hover: rgb(219, 222, 225);
+
+  --brand-experiment: rgb(88, 101, 242);
+  --background-secondary-alt: rgb(7, 11, 29);
+  --background-accent: rgb(65, 67, 74);
+  --background-primary: rgb(49, 51, 56);
   --background-tertiary: rgb(30, 31, 34);
   --background-secondary: rgb(43, 45, 49);
   --background-modifier-accent: rgba(78, 80, 88, 0.48);

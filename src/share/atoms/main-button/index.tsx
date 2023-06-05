@@ -8,7 +8,8 @@ export interface IIcon {
     | "TOP-RIGHT"
     | "BOTTOM-LEFT"
     | "BOTTOM-RIGHT"
-    | "CENTER";
+    | "CENTER"
+    | "COVER";
 }
 
 interface IMainButtonProps extends React.PropsWithChildren {
@@ -16,6 +17,7 @@ interface IMainButtonProps extends React.PropsWithChildren {
   isChanelChoosen?: boolean;
   iconList?: IIcon[];
   imageUrl?: string;
+  buttonSize?: "BIG" | "MEDIUM" | "SMALL";
   handleClick?: () => void;
 }
 
@@ -24,9 +26,10 @@ const MainButton: React.FC<IMainButtonProps> = ({
   isChanelChoosen = false,
   iconList,
   imageUrl,
+  buttonSize = "MEDIUM",
   handleClick,
 }) => {
-  const getIconWrapperStyle = React.useCallback((iconList: IIcon) => {
+  const getIconWrapperClass = React.useCallback((iconList: IIcon) => {
     switch (iconList.iconPosition) {
       case "TOP-LEFT":
         return styles.iconWrapperTL;
@@ -36,27 +39,53 @@ const MainButton: React.FC<IMainButtonProps> = ({
         return styles.iconWrapperBL;
       case "BOTTOM-RIGHT":
         return styles.iconWrapperBR;
+      case "CENTER":
+        return styles.iconWrapperCT;
+      case "COVER":
+        return styles.iconWrapperCV;
       default:
         return "";
     }
   }, []);
 
-  return (
-    <div
-      className={
-        isChanelChoosen
-          ? styles.buttonWrapper
-          : `${styles.buttonWrapperChoosen}`
+  const getButtonSizeClass = React.useCallback(
+    (buttonSize: "BIG" | "MEDIUM" | "SMALL") => {
+      switch (buttonSize) {
+        case "BIG":
+          return styles.buttonWrapperB;
+        case "MEDIUM":
+          return styles.buttonWrapperM;
+        case "SMALL":
+          return styles.buttonWrapperS;
+        default:
+          return "";
       }
-      onClick={handleClick}
-    >
-      {!imageUrl && <p>{name}</p>}
-      {imageUrl && <img src={imageUrl} alt="avatar" />}
-      {iconList &&
-        iconList.length > 0 &&
-        iconList.map((item) => (
-          <div className={getIconWrapperStyle(item)}>{item.Icon}</div>
-        ))}
+    },
+    [],
+  );
+
+  return (
+    <div className={getButtonSizeClass(buttonSize)}>
+      <div
+        className={
+          isChanelChoosen
+            ? styles.buttonWrapperChoosen
+            : `${styles.buttonWrapper}`
+        }
+        onClick={handleClick}
+      >
+        {!imageUrl && <p className={styles.customName}>{name}</p>}
+        {imageUrl && (
+          <img className={styles.customImage} src={imageUrl} alt="avatar" />
+        )}
+        {iconList &&
+          iconList.length > 0 &&
+          iconList.map((item, index) => (
+            <div key={index} className={getIconWrapperClass(item)}>
+              {item.Icon}
+            </div>
+          ))}
+      </div>
     </div>
   );
 };

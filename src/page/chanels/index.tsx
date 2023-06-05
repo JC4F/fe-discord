@@ -1,17 +1,12 @@
 import React from "react";
-import { http } from "utils";
+import { Outlet } from "react-router-dom";
 
-const MainScreen: React.FC = () => {
-  const handleClickBtn = async () => {
-    const rs = await http.get("authen/profile");
-    console.log(rs);
-  };
+const ChanelScreen: React.FC = () => {
   return (
     <>
-      MainScreen
-      <button onClick={handleClickBtn}>get profile</button>
+      <Outlet />
     </>
   );
 };
 
-export default MainScreen;
+export default ChanelScreen;

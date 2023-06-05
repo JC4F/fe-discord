@@ -1,0 +1,48 @@
+.mediaControlWrapper,
+.right,
+.left {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+.left {
+  padding: 0 8px;
+  border-radius: 4px;
+}
+
+.left p {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  color: var(--header-primary);
+  line-height: 18px;
+  font-weight: 600;
+
+  display: flex;
+  align-self: center;
+  margin-left: 8px;
+  cursor: pointer;
+}
+
+.iconWrapper {
+  line-height: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  color: var(--interactive-normal);
+  cursor: pointer;
+
+  display: flex;
+  align-self: center;
+  margin-left: 8px;
+}
+
+.left:hover,
+.iconWrapper:hover {
+  color: var(--interactive-hover);
+  background-color: var(--background-modifier-selected);
+}

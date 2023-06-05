@@ -1,10 +1,12 @@
 import React from "react";
 import MainButton, { IIcon } from "share/atoms/main-button";
+import { ReactComponent as DiscordLogo } from "assest/svg/discord-icon.svg";
 import { ReactComponent as Event } from "assest/svg/event-svgrepo-com.svg";
 import { ReactComponent as Add } from "assest/svg/add-svgrepo-com.svg";
 import { ReactComponent as Discover } from "assest/svg/discover-1-svgrepo-com.svg";
 import IconWrapper from "share/atoms/icon-wrapper";
 import { useAppSelector } from "store/hooks";
+import { useNavigate } from "react-router-dom";
 import styles from "./index.module.css";
 
 export interface IChanelItem {
@@ -22,6 +24,7 @@ interface ISidebarChanelsProps extends React.PropsWithChildren {
 const SidebarChanels: React.FC<ISidebarChanelsProps> = ({ chanelList }) => {
   const { userId } = useAppSelector((state) => state.authen.user);
   const [chanelIdChoosing, setChanelIdChoosing] = React.useState<string>("");
+  const navigate = useNavigate();
 
   const getIconList = React.useCallback((chanelItem: IChanelItem) => {
     const iconList: IIcon[] = [];
@@ -42,6 +45,10 @@ const SidebarChanels: React.FC<ISidebarChanelsProps> = ({ chanelList }) => {
     return iconList;
   }, []);
 
+  const handleClickDiscordLogo = React.useCallback(() => {
+    navigate("/chanels/@me");
+  }, []);
+
   const handleClickChooseChanel = React.useCallback((chanelId: string) => {
     setChanelIdChoosing(chanelId);
 
@@ -58,6 +65,15 @@ const SidebarChanels: React.FC<ISidebarChanelsProps> = ({ chanelList }) => {
 
   return (
     <div className={styles.sideBarWrapper}>
+      <MainButton
+        iconList={[
+          {
+            Icon: <DiscordLogo />,
+            iconPosition: "CENTER",
+          },
+        ]}
+        handleClick={handleClickDiscordLogo}
+      />
       {chanelList.length > 0 &&
         chanelList.map((item) => (
           <MainButton
