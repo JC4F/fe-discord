@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./index.module.css";
 
-export interface IIcon {
+export interface IMainButtonIcon {
   Icon: JSX.Element;
   iconPosition:
     | "TOP-LEFT"
@@ -12,10 +12,10 @@ export interface IIcon {
     | "COVER";
 }
 
-interface IMainButtonProps extends React.PropsWithChildren {
+export interface IMainButtonProps extends React.PropsWithChildren {
   name?: string;
   isChanelChoosen?: boolean;
-  iconList?: IIcon[];
+  iconList?: IMainButtonIcon[];
   imageUrl?: string;
   buttonSize?: "BIG" | "MEDIUM" | "SMALL";
   handleClick?: () => void;
@@ -29,7 +29,7 @@ const MainButton: React.FC<IMainButtonProps> = ({
   buttonSize = "MEDIUM",
   handleClick,
 }) => {
-  const getIconWrapperClass = React.useCallback((iconList: IIcon) => {
+  const getIconWrapperClass = React.useCallback((iconList: IMainButtonIcon) => {
     switch (iconList.iconPosition) {
       case "TOP-LEFT":
         return styles.iconWrapperTL;

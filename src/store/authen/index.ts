@@ -101,6 +101,7 @@ export const authenSlice = createSlice({
       state.user = { ...initUser };
     },
     toggleMic: (state) => {
+      console.log(1);
       state.userSettings.isMicOn = !state.userSettings.isMicOn;
     },
     toggleHeadPhone: (state) => {

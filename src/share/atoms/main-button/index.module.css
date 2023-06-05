@@ -1,7 +1,7 @@
 .buttonWrapperB {
   position: relative;
   width: 60px;
-  height: 60px;
+  height: 64px;
 }
 
 .buttonWrapperM {
@@ -12,8 +12,8 @@
 
 .buttonWrapperS {
   position: relative;
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
 }
 
 .buttonWrapper,
@@ -93,4 +93,6 @@
   display: block;
   object-fit: cover;
   pointer-events: none;
+  width: 100%;
+  height: 100%;
 }

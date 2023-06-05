@@ -52,6 +52,7 @@
   display: flex;
   flex-direction: column;
   background-color: var(--background-primary);
+  overflow: hidden;
 }
 
 .mainHead {
@@ -71,4 +72,5 @@
   border-bottom: 1px solid var(--elevation-low);
   box-sizing: border-box;
   user-select: none;
+  justify-content: space-between;
 }

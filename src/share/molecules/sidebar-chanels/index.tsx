@@ -1,5 +1,5 @@
 import React from "react";
-import MainButton, { IIcon } from "share/atoms/main-button";
+import MainButton, { IMainButtonIcon } from "share/atoms/main-button";
 import { ReactComponent as DiscordLogo } from "assest/svg/discord-icon.svg";
 import { ReactComponent as Event } from "assest/svg/event-svgrepo-com.svg";
 import { ReactComponent as Add } from "assest/svg/add-svgrepo-com.svg";
@@ -27,7 +27,7 @@ const SidebarChanels: React.FC<ISidebarChanelsProps> = ({ chanelList }) => {
   const navigate = useNavigate();
 
   const getIconList = React.useCallback((chanelItem: IChanelItem) => {
-    const iconList: IIcon[] = [];
+    const iconList: IMainButtonIcon[] = [];
     if (chanelItem.isEventing) {
       iconList.push({
         Icon: <IconWrapper content={<Event />} />,

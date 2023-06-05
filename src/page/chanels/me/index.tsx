@@ -102,35 +102,38 @@ const Me: React.FC = () => {
               <FriendIcon />
               <h1 className={styles.startTitle}>Bạn bè</h1>
               <div className={styles.seperate}></div>
-              {friendActionState.map(
-                (item: Exclude<IFriendChoosing, "NONE">) => {
-                  if (item === "PENDING") {
+              <div className={styles.friendActionState}>
+                {friendActionState.map(
+                  (item: Exclude<IFriendChoosing, "NONE">) => {
+                    if (item === "PENDING") {
+                      return (
+                        <div
+                          key={item}
+                          className={`${styles.friendState} ${styles.friendChoosed}`}
+                        >
+                          {getFriendText(item)}
+                          {pendingUsers.length > 0 && (
+                            <div className={styles.haveNotify}>
+                              {pendingUsers.length}
+                            </div>
+                          )}
+                        </div>
+                      );
+                    } else if (item === "ADD-MORE") {
+                      return (
+                        <div key={item} className={styles.friendAction}>
+                          {getFriendText(item)}
+                        </div>
+                      );
+                    }
                     return (
-                      <div
-                        className={`${styles.friendState} ${styles.friendChoosed}`}
-                      >
+                      <div key={item} className={styles.friendState}>
                         {getFriendText(item)}
-                        {pendingUsers.length > 0 && (
-                          <div className={styles.haveNotify}>
-                            {pendingUsers.length}
-                          </div>
-                        )}
                       </div>
                     );
-                  } else if (item === "ADD-MORE") {
-                    return (
-                      <div className={styles.friendAction}>
-                        {getFriendText(item)}
-                      </div>
-                    );
-                  }
-                  return (
-                    <div className={styles.friendState}>
-                      {getFriendText(item)}
-                    </div>
-                  );
-                },
-              )}
+                  },
+                )}
+              </div>
             </div>
             <div className={styles.notifyWrapper}>
               <div className={styles.createGroupChat}>

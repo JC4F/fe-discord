@@ -29,7 +29,6 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  flex: 1;
 }
 
 .friendWrapper svg {
@@ -41,6 +40,12 @@
   height: 24px;
   -webkit-app-region: no-drag;
   color: var(--channel-icon);
+}
+
+.friendActionState {
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 .startTitle {
@@ -118,10 +123,15 @@
   color: var(--text-positive);
 }
 
+.friendActionState {
+  overflow: hidden;
+}
+
 .notifyWrapper {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex: 0 0 auto;
 }
 
 .notifyWrapper svg {

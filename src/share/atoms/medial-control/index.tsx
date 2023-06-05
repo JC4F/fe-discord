@@ -16,9 +16,9 @@ const MediaControl: React.FC = () => {
   } = useAppSelector((state) => state.authen);
   const dispatch = useAppDispatch();
 
-  const handleToggleMic = React.useCallback(() => dispatch(toggleMic), []);
+  const handleToggleMic = React.useCallback(() => dispatch(toggleMic()), []);
   const handleToggleHeadPhone = React.useCallback(
-    () => dispatch(toggleHeadPhone),
+    () => dispatch(toggleHeadPhone()),
     [],
   );
 
