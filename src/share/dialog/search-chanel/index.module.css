@@ -1,0 +1,46 @@
+.customInputDialog {
+  z-index: 1;
+  flex: 0 0 auto;
+  display: block;
+  padding: 0 12px;
+  font-size: 22px;
+  border-radius: 5px;
+  border: none;
+  height: 70px;
+  line-height: 70px;
+  color: var(--text-normal);
+  background-color: var(--input-background);
+}
+
+.haveResult {
+  z-index: 0;
+  margin-right: -17px;
+  margin-top: 16px;
+  max-height: 236px;
+  background-color: var(--background-secondary);
+
+  overflow: hidden scroll;
+  padding-right: 0px;
+
+  box-sizing: border-box;
+}
+
+.notFoundResult {
+  padding-top: 150px;
+  padding-bottom: 20px;
+  background: no-repeat 50% 20px;
+  text-align: center;
+  font-weight: 500;
+  box-sizing: border-box;
+  background-image: url(/src/assest/svg/dialog-search-not-found.svg);
+}
+
+.notFoundText {
+  font-size: 16px;
+  line-height: 20px;
+  color: var(--text-muted);
+}
+
+.tip {
+  padding: 10px 0;
+}

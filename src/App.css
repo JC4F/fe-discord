@@ -15,6 +15,7 @@ span,
 strong,
 textarea {
   outline: 0;
+  border: none;
 }
 a,
 abbr,
@@ -100,4 +101,8 @@ var {
 svg {
   width: 20px;
   height: 20px;
+}
+
+.MuiPaper-root.MuiPaper-elevation {
+  background-color: transparent;
 }
