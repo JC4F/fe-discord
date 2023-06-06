@@ -4,7 +4,14 @@ import SearchChanelDialog from "share/dialog/search-chanel";
 import { ReactComponent as FriendIcon } from "assest/svg/friend.svg";
 import { ReactComponent as CreateGroupChatIcon } from "assest/svg/create-new-group-chat.svg";
 import { ReactComponent as MailComingIcon } from "assest/svg/new-coming-mail.svg";
+import { ReactComponent as NitroIcon } from "assest/svg/nitro.svg";
+import { ReactComponent as BirthdayIcon } from "assest/svg/birthday.svg";
+import { ReactComponent as AddIcon } from "assest/svg/add-svgrepo-com.svg";
+import { ReactComponent as CloseIcon } from "assest/svg/close.svg";
+import MainButtonExpand from "share/atoms/main-button-expand";
+import { IUserState } from "store/authen/type";
 import styles from "./index.module.css";
+import IconStateWrapper from "share/atoms/icon-state-wrapper";
 
 type IFriendChoosing =
   | "NONE"
@@ -31,6 +38,15 @@ interface IPendingUser {
   imageUrl: string;
 }
 
+// fake data lấy từ context sau khi f5 hoặc login chẳng hạn, mảng all user
+interface IAllUser {
+  userId: string;
+  username: string;
+  imageUrl: string;
+  state: IUserState;
+  extraInfo?: string;
+}
+
 const pendingUsers: IPendingUser[] = [
   {
     userId: "1",
@@ -43,6 +59,41 @@ const pendingUsers: IPendingUser[] = [
     username: "Quan222",
     imageUrl:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBqDiLJS8JtdilSrSns8zFI1OSCnnmZmY4m-JJ2BKN&s",
+  },
+];
+
+const allUsers: IAllUser[] = [
+  {
+    userId: "1",
+    username: "Quan",
+    imageUrl:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBqDiLJS8JtdilSrSns8zFI1OSCnnmZmY4m-JJ2BKN&s",
+    state: "ACTIVE",
+    extraInfo: "PLay Lol",
+  },
+  {
+    userId: "2",
+    username: "Quan1",
+    imageUrl:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBqDiLJS8JtdilSrSns8zFI1OSCnnmZmY4m-JJ2BKN&s",
+    state: "BUSY",
+    extraInfo: "PLay Lol1",
+  },
+  {
+    userId: "3",
+    username: "Quan2",
+    imageUrl:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBqDiLJS8JtdilSrSns8zFI1OSCnnmZmY4m-JJ2BKN&s",
+    state: "INACTIVE",
+    extraInfo: "PLay Lol2",
+  },
+  {
+    userId: "4",
+    username: "Quan",
+    imageUrl:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBqDiLJS8JtdilSrSns8zFI1OSCnnmZmY4m-JJ2BKN&s",
+    state: "WAIT",
+    extraInfo: "PLay Lol3",
   },
 ];
 
@@ -95,7 +146,87 @@ const Me: React.FC = () => {
             Tìm hoặc bắt đầu một cuộc trò chuyện
           </button>
         }
-        NextContentEle={<div>next-content</div>}
+        NextContentEle={
+          <>
+            <MainButtonExpand
+              mainButtonProps={{
+                buttonSize: "SMALL",
+                iconList: [{ Icon: <FriendIcon />, iconPosition: "CENTER" }],
+              }}
+              des={{ representName: "Bạn bè" }}
+              onClick={() => {
+                console.log(99);
+              }}
+              iconList={[
+                {
+                  Icon: (
+                    <div className={styles.haveNotify}>
+                      {pendingUsers.length}
+                    </div>
+                  ),
+                  isShownOnHover: false,
+                },
+              ]}
+              isButtonChoosen={true}
+            />
+            <MainButtonExpand
+              mainButtonProps={{
+                buttonSize: "SMALL",
+                iconList: [{ Icon: <NitroIcon />, iconPosition: "CENTER" }],
+              }}
+              des={{ representName: "Nitro" }}
+            />
+            <MainButtonExpand
+              mainButtonProps={{
+                buttonSize: "SMALL",
+                iconList: [
+                  {
+                    Icon: (
+                      <BirthdayIcon
+                        style={{ color: "var(--discord-8th-bday-yellow)" }}
+                      />
+                    ),
+                    iconPosition: "CENTER",
+                  },
+                ],
+              }}
+              des={{ representName: "Sinh Nhật Discord" }}
+            />
+            {/* sau check dk hien thi neu co friend */}
+            <h2 className={styles.directMessage}>
+              <span>TIN NHẮN TRỰC TIẾP</span>
+              <AddIcon />
+            </h2>
+
+            {allUsers.length > 0 &&
+              allUsers.map((item) => (
+                <MainButtonExpand
+                  key={item.userId}
+                  mainButtonProps={{
+                    imageUrl: item.imageUrl,
+                    buttonSize: "SMALL",
+                    iconList: [
+                      {
+                        Icon: <IconStateWrapper state={item.state} />,
+                        iconPosition: "BOTTOM-RIGHT",
+                      },
+                    ],
+                  }}
+                  des={{
+                    representName: item.username,
+                    extraInfo: item.extraInfo,
+                  }}
+                  iconList={[
+                    {
+                      Icon: <CloseIcon />,
+                      isShownOnHover: true,
+                    },
+                  ]}
+                  onClick={() => console.log(item.userId)}
+                />
+              ))}
+          </>
+        }
         MainHeadEle={
           <>
             <div className={styles.friendWrapper}>

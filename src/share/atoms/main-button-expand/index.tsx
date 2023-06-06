@@ -10,11 +10,12 @@ interface IMainButonExpandIcon {
 interface IMainButtonExpandProps {
   mainButtonProps: IMainButtonProps;
   des: {
-    reprentName: string;
+    representName: string;
     extraInfo?: string;
   };
-  onClick: () => void;
+  onClick?: () => void;
   iconList?: IMainButonExpandIcon[];
+  isButtonChoosen?: boolean;
 }
 
 const MainButtonExpand: React.FC<IMainButtonExpandProps> = ({
@@ -22,21 +23,32 @@ const MainButtonExpand: React.FC<IMainButtonExpandProps> = ({
   des,
   onClick,
   iconList,
+  isButtonChoosen = false,
 }) => {
   return (
-    <div className={styles.buttonWrapper} onClick={onClick}>
+    <div
+      className={
+        isButtonChoosen ? styles.buttonChoosingWrapper : styles.buttonWrapper
+      }
+      onClick={onClick}
+    >
       <div className={styles.left}>
-        <MainButton {...mainButtonProps} />
+        <MainButton
+          {...mainButtonProps}
+          isChanelChoosen={isButtonChoosen}
+          disabledHover={true}
+        />
         <div className={styles.des}>
-          <h2>{des.reprentName}</h2>
+          <h2>{des.representName}</h2>
           {des.extraInfo && <span>{des.extraInfo}</span>}
         </div>
       </div>
       <div className={styles.right}>
-        {iconList?.map((icon) => (
+        {iconList?.map((icon, index) => (
           <div
+            key={index}
             className={
-              icon.isShownOnHover ? styles.iconDisplay : styles.iconHide
+              icon.isShownOnHover ? styles.iconHide : styles.iconDisplay
             }
           >
             {icon.Icon}

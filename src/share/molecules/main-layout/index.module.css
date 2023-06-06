@@ -36,6 +36,9 @@
 
 .nextContent {
   flex: 1;
+  overflow: hidden scroll;
+  padding-right: 0px;
+  padding-top: 8px;
 }
 
 .mediaControl {

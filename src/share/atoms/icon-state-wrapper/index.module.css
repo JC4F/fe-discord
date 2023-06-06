@@ -1,0 +1,7 @@
+.customIcon svg {
+  width: 13px;
+  height: 13px;
+  padding: 2px;
+  background-color: rgb(43, 45, 49);
+  border-radius: 50%;
+}

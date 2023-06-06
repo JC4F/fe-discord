@@ -21,7 +21,7 @@ export interface IAuthenErrorResponse {
   error: string;
 }
 
-export type IUserState = "ACTIVE" | "INACTIVE" | "BUSY" | "RELAX";
+export type IUserState = "ACTIVE" | "INACTIVE" | "BUSY" | "WAIT";
 
 export interface IUserSettings {
   isMicOn: boolean;

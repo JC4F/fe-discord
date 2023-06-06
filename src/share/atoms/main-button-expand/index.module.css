@@ -1,14 +1,76 @@
-.mediaControlWrapper,
 .right,
-.left {
+.left,
+.des {
   display: flex;
-  justify-content: center;
-  align-content: center;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.des {
+  margin-left: 12px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  align-items: flex-start;
+}
+
+.des h2 {
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 500;
+  flex: 0 1 auto;
+}
+
+.des span {
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.right {
+  padding-right: 8px;
+}
+
+.buttonChoosingWrapper,
+.buttonWrapper {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  max-width: 100%;
+  margin-left: 8px;
+  border-radius: 4px;
+  height: 42px;
+
+  flex: 1 1 auto;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  cursor: pointer;
+  margin-bottom: 2px;
+}
+
+.buttonChoosingWrapper:hover,
+.buttonWrapper:hover {
+  color: var(--interactive-hover);
+  background: var(--bg-overlay-hover, var(--background-modifier-hover));
+}
+
+.buttonWrapper {
+  color: var(--channels-default);
+}
+
+.buttonChoosingWrapper {
+  color: var(--interactive-active);
+  background: var(--bg-overlay-selected, var(--background-modifier-selected));
+}
+
+div.des {
+  flex-direction: column;
 }
 
 .left {
   padding: 0 8px;
   border-radius: 4px;
+  flex: 1;
 }
 
 .iconHide {

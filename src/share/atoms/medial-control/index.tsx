@@ -7,12 +7,13 @@ import { ReactComponent as HeadPhoneOn } from "assest/svg/headphone-svgrepo-com.
 import { ReactComponent as HeadPhoneOff } from "assest/svg/headphone-slash-svgrepo-com.svg";
 import { ReactComponent as Setting } from "assest/svg/settings-svgrepo-com.svg";
 import { toggleHeadPhone, toggleMic } from "store/authen";
+import IconStateWrapper from "../icon-state-wrapper";
 import styles from "./index.module.css";
 
 const MediaControl: React.FC = () => {
   const {
     user: { imageUrl, username },
-    userSettings: { isHeadPhoneOn, isMicOn },
+    userSettings: { isHeadPhoneOn, isMicOn, userState },
   } = useAppSelector((state) => state.authen);
   const dispatch = useAppDispatch();
 
@@ -25,7 +26,16 @@ const MediaControl: React.FC = () => {
   return (
     <div className={styles.mediaControlWrapper}>
       <div className={styles.left}>
-        <MainButton imageUrl={imageUrl} buttonSize="SMALL" />
+        <MainButton
+          imageUrl={imageUrl}
+          buttonSize="SMALL"
+          iconList={[
+            {
+              Icon: <IconStateWrapper state={userState} />,
+              iconPosition: "BOTTOM-RIGHT",
+            },
+          ]}
+        />
         <p>{username}</p>
       </div>
       <div className={styles.right}>
