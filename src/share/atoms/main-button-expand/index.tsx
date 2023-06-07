@@ -31,6 +31,7 @@ const MainButtonExpand: React.FC<IMainButtonExpandProps> = ({
         isButtonChoosen ? styles.buttonChoosingWrapper : styles.buttonWrapper
       }
       onClick={onClick}
+      data-wrapper
     >
       <div className={styles.left}>
         <MainButton

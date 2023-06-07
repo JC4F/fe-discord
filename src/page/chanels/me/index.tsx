@@ -8,10 +8,15 @@ import { ReactComponent as NitroIcon } from "assest/svg/nitro.svg";
 import { ReactComponent as BirthdayIcon } from "assest/svg/birthday.svg";
 import { ReactComponent as AddIcon } from "assest/svg/add-svgrepo-com.svg";
 import { ReactComponent as CloseIcon } from "assest/svg/close.svg";
+import { ReactComponent as NoFriendIcon } from "assest/svg/no-friend.svg";
+import { ReactComponent as SearchIcon } from "assest/svg/search.svg";
+import { ReactComponent as MessageIcon } from "assest/svg/message.svg";
+import { ReactComponent as OtherChoiceIcon } from "assest/svg/other-choice.svg";
 import MainButtonExpand from "share/atoms/main-button-expand";
 import { IUserState } from "store/authen/type";
-import styles from "./index.module.css";
 import IconStateWrapper from "share/atoms/icon-state-wrapper";
+import IconToolTip from "share/atoms/icon-tooltip";
+import styles from "./index.module.css";
 
 type IFriendChoosing =
   | "NONE"
@@ -84,7 +89,7 @@ const allUsers: IAllUser[] = [
     username: "Quan2",
     imageUrl:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBqDiLJS8JtdilSrSns8zFI1OSCnnmZmY4m-JJ2BKN&s",
-    state: "INACTIVE",
+    state: "ACTIVE",
     extraInfo: "PLay Lol2",
   },
   {
@@ -276,7 +281,100 @@ const Me: React.FC = () => {
             </div>
           </>
         }
-        MainContentEle={<div>main-content</div>}
+        MainContentEle={
+          <>
+            <div className={styles.mainContentLeft}>
+              {(!allUsers ||
+                allUsers.length === 0 ||
+                allUsers.every((item) => item.state !== "ACTIVE")) && (
+                <div className={styles.noFriends}>
+                  <NoFriendIcon />
+                  <h2>Chả có ai chơi với Wumpus cả.</h2>
+                </div>
+              )}
+              {allUsers &&
+                allUsers.length > 0 &&
+                allUsers.some((item) => item.state === "ACTIVE") && (
+                  <>
+                    <div className={styles.inputSearchWrapper}>
+                      <input
+                        className={styles.input}
+                        type="text"
+                        placeholder="Tìm kiếm"
+                      />
+                      <SearchIcon />
+                    </div>
+                    <div className={styles.titleWrapper}>
+                      <h2 className={styles.title}>
+                        Tất cả bạn bè - {allUsers.length}
+                      </h2>
+                    </div>
+                    <div className={styles.friendListWrapper}>
+                      {allUsers.length === 0 && (
+                        <div className={styles.noFriends}>
+                          <NoFriendIcon />
+                          <h2>Chả có ai chơi với Wumpus cả.</h2>
+                        </div>
+                      )}
+                      {allUsers.length > 0 &&
+                        allUsers.map((item) => (
+                          <div key={item.userId} className={styles.friendList}>
+                            <MainButtonExpand
+                              mainButtonProps={{
+                                buttonSize: "SMALL",
+                                imageUrl: item.imageUrl,
+                                iconList: [
+                                  {
+                                    Icon: (
+                                      <IconStateWrapper state={item.state} />
+                                    ),
+                                    iconPosition: "BOTTOM-RIGHT",
+                                  },
+                                ],
+                              }}
+                              des={{
+                                representName: item.username,
+                                extraInfo: item.extraInfo,
+                              }}
+                              iconList={[
+                                {
+                                  Icon: (
+                                    <IconToolTip
+                                      Icon={<MessageIcon />}
+                                      title={"Nhắn tin"}
+                                    />
+                                  ),
+                                  isShownOnHover: false,
+                                },
+                                {
+                                  Icon: (
+                                    <IconToolTip
+                                      Icon={<OtherChoiceIcon />}
+                                      title={"Những mục khác"}
+                                    />
+                                  ),
+                                  isShownOnHover: false,
+                                },
+                              ]}
+                            />
+                          </div>
+                        ))}
+                    </div>
+                  </>
+                )}
+            </div>
+            <div className={styles.mainContentRight}>
+              <h2>Đang Hoạt Động</h2>
+              <div className={styles.activeUsers}>
+                <h4>Hiện tại không có cập nhật mới nào cả…</h4>
+                <span>
+                  Nếu bạn bè của bạn có hoạt động mới, ví dụ như chơi game hoặc
+                  trò chuyện thoại, chúng tôi sẽ hiển thị hoạt động đó ở đây!
+                </span>
+              </div>
+            </div>
+          </>
+        }
       />
       <SearchChanelDialog
         isOpen={meState.dialogOpen}

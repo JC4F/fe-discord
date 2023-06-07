@@ -40,7 +40,7 @@ const MainLayout: React.FC<IMainLayoutProps> = ({
           <MediaControl />
         </div>
       </div>
-      <div className={styles.mainContent}>
+      <div className={styles.mainContentWrapper}>
         <div className={styles.mainHead}>{MainHeadEle}</div>
         <div className={styles.mainContent}>{MainContentEle}</div>
       </div>
