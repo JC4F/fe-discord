@@ -2,7 +2,7 @@ import React from "react";
 import MainButton, { IMainButtonProps } from "../main-button";
 import styles from "./index.module.css";
 
-interface IMainButonExpandIcon {
+export interface IMainButonExpandIcon {
   Icon: JSX.Element;
   isShownOnHover: boolean;
 }

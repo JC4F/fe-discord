@@ -19,9 +19,9 @@ const IconStateWrapper: React.FC<IIconStateWrapperProps> = ({ state }) => {
       mainIcon = <InActiveIcon />;
     } else if (state === "BUSY") {
       mainIcon = <BusyIcon />;
-    } else {
+    } else if (state === "WAIT") {
       mainIcon = <WaitIcon />;
-    }
+    } else mainIcon = <></>;
 
     return <div className={styles.customIcon}>{mainIcon}</div>;
   }, []);

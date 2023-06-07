@@ -3,6 +3,9 @@
 :root {
   --discord-8th-bday-yellow: rgb(255, 255, 0);
 
+  --deprecated-text-input-bg: rgb(30, 31, 34);
+  --deprecated-text-input-border: rgba(0, 0, 0, 0.298);
+
   --channels-default: rgb(148, 155, 164);
 
   --elevation-low: rgba(2, 2, 2, 0.2);
