@@ -15,6 +15,9 @@ interface IMainButtonExpandProps {
   };
   onClick?: () => void;
   iconList?: IMainButonExpandIcon[];
+  canHover?: boolean;
+  isHoverWithState?: boolean;
+  isHovering?: boolean;
   isButtonChoosen?: boolean;
 }
 
@@ -23,23 +26,31 @@ const MainButtonExpand: React.FC<IMainButtonExpandProps> = ({
   des,
   onClick,
   iconList,
+  canHover = true,
+  isHoverWithState = false,
+  isHovering = false,
   isButtonChoosen = false,
 }) => {
+  const mainBtnClassName = React.useMemo(() => {
+    if (!canHover) return styles.btnCantHover;
+
+    if (isHoverWithState && !isButtonChoosen && !isHovering)
+      return styles.btnHoverWithState;
+    else if (isHoverWithState && !isButtonChoosen && isHovering)
+      return `${styles.btnHoverWithState} ${styles.btnHovered}`;
+    else if (isHoverWithState && isButtonChoosen)
+      return `${styles.btnHoverWithState} ${styles.btnChoosen}`;
+    else if (!isHoverWithState && !isButtonChoosen)
+      return styles.btnHoverNormal;
+    else if (!isHoverWithState && isButtonChoosen)
+      return `${styles.btnHoverNormal} ${styles.btnChoosen}`;
+  }, [canHover, isHoverWithState, isButtonChoosen, isHovering]);
+
   return (
-    <div
-      className={
-        isButtonChoosen ? styles.buttonChoosingWrapper : styles.buttonWrapper
-      }
-      onClick={onClick}
-      data-wrapper
-    >
+    <div className={mainBtnClassName} onClick={onClick} data-wrapper>
       <div className={styles.left}>
-        <MainButton
-          {...mainButtonProps}
-          isChanelChoosen={isButtonChoosen}
-          disabledHover={true}
-        />
-        <div className={styles.des}>
+        <MainButton {...mainButtonProps} disabledHover={true} />
+        <div className={styles.des} data-infor>
           <h2>{des.representName}</h2>
           {des.extraInfo && <span>{des.extraInfo}</span>}
         </div>

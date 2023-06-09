@@ -1,16 +1,24 @@
 @import url("https://fonts.cdnfonts.com/css/gg-sans-2");
 
 :root {
+  --dark-elevation-border: rgba(30, 31, 34, 0.6);
+  --dark-elevation-high: rgba(0, 0, 0, 0.2);
+
   --discord-8th-bday-yellow: rgb(255, 255, 0);
 
   --deprecated-text-input-bg: rgb(30, 31, 34);
   --deprecated-text-input-border: rgba(0, 0, 0, 0.298);
 
+  --brand-500: rgb(88, 101, 242);
+
   --channels-default: rgb(148, 155, 164);
 
   --elevation-low: rgba(2, 2, 2, 0.2);
 
+  --modal-background: rgb(49, 51, 56);
+
   --white-500: rgb(255, 255, 255);
+  --white-500-hsl: rgba(255, 255, 255, 0.04);
   --channel-icon: rgb(138, 132, 142);
 
   --text-danger: rgb(250, 119, 124);
@@ -18,6 +26,8 @@
   --text-normal: rgb(219, 222, 225);
   --text-muted: rgb(148, 155, 164);
   --text-positive: rgb(45, 199, 112);
+
+  --primary-400: rgb(128, 132, 142);
 
   --status-danger: rgb(242, 63, 66);
   --status-positive-background: rgb(36, 128, 70);

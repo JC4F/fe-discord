@@ -19,7 +19,9 @@ import { IUserState } from "store/authen/type";
 import IconStateWrapper from "share/atoms/icon-state-wrapper";
 import IconToolTip from "share/atoms/icon-tooltip";
 import { Button } from "@mui/material";
+import CustomTooltipDialog from "share/atoms/custom-tooltip-dialog";
 import styles from "./index.module.css";
+import CreateGroupChat from "share/molecules/create-group-chat";
 
 const NoFriend = () => {
   return (
@@ -75,7 +77,7 @@ const initMeState: IMeState = {
 };
 
 // fake data lấy từ context sau khi f5 hoặc login chẳng hạn, mảng all user
-interface IAllUser {
+export interface IAllUser {
   userId: string;
   username: string;
   imageUrl: string;
@@ -358,26 +360,34 @@ const Me: React.FC = () => {
             {/* sau check dk hien thi neu co friend */}
             <h2 className={styles.directMessage}>
               <span>TIN NHẮN TRỰC TIẾP</span>
-              <AddIcon />
+              <CustomTooltipDialog
+                dialogContent={<CreateGroupChat />}
+                tooltipContent={<AddIcon />}
+                tooltipProps={{
+                  placement: "bottom-start",
+                }}
+                nestTitle="Tạo DM"
+                nestPlacement="top"
+              />
             </h2>
 
             {allUsers.length > 0 &&
-              allUsers.map((item) => (
+              allUsers.map((user) => (
                 <MainButtonExpand
-                  key={item.userId}
+                  key={user.userId}
                   mainButtonProps={{
-                    imageUrl: item.imageUrl,
+                    imageUrl: user.imageUrl,
                     buttonSize: "SMALL",
                     iconList: [
                       {
-                        Icon: <IconStateWrapper state={item.state} />,
+                        Icon: <IconStateWrapper state={user.state} />,
                         iconPosition: "BOTTOM-RIGHT",
                       },
                     ],
                   }}
                   des={{
-                    representName: item.username,
-                    extraInfo: item.extraInfo,
+                    representName: user.username,
+                    extraInfo: user.extraInfo,
                   }}
                   iconList={[
                     {
@@ -385,7 +395,7 @@ const Me: React.FC = () => {
                       isShownOnHover: true,
                     },
                   ]}
-                  onClick={() => console.log(item.userId)}
+                  onClick={() => console.log(user.userId)}
                 />
               ))}
           </>
@@ -450,7 +460,15 @@ const Me: React.FC = () => {
             </div>
             <div className={styles.notifyWrapper}>
               <div className={styles.createGroupChat}>
-                <CreateGroupChatIcon />
+                <CustomTooltipDialog
+                  dialogContent={<CreateGroupChat />}
+                  tooltipContent={<CreateGroupChatIcon />}
+                  tooltipProps={{
+                    placement: "bottom-end",
+                  }}
+                  nestTitle="Nhóm danh mục mới"
+                  nestPlacement="bottom"
+                />
               </div>
               <div className={styles.mailComing}>
                 <MailComingIcon />

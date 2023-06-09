@@ -30,8 +30,8 @@
   padding-right: 8px;
 }
 
-.buttonChoosingWrapper,
-.buttonWrapper {
+.btnHoverWithState,
+.btnHoverNormal {
   display: flex;
   align-items: center;
   box-sizing: border-box;
@@ -47,17 +47,18 @@
   margin-bottom: 2px;
 }
 
-.buttonChoosingWrapper:hover,
-.buttonWrapper:hover {
+.btnHoverNormal:hover,
+.btnHoverWithState.btnHovered {
   color: var(--interactive-hover);
   background: var(--bg-overlay-hover, var(--background-modifier-hover));
 }
 
-.buttonWrapper {
+.btnHoverNormal {
   color: var(--channels-default);
 }
 
-.buttonChoosingWrapper {
+.btnHoverNormal.btnChoosen,
+.btnHoverWithState.btnChoosen {
   color: var(--interactive-active);
   background: var(--bg-overlay-selected, var(--background-modifier-selected));
 }
@@ -76,6 +77,10 @@ div.des {
   display: none;
 }
 
-.buttonWrapper:hover .iconHide {
+.btnHoverNormal:hover .iconHide {
+  display: block;
+}
+
+.btnHoverWithState.btnHovered .iconHide {
   display: block;
 }

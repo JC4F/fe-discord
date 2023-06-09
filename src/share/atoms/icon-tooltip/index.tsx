@@ -6,6 +6,7 @@ import styles from "./index.module.css";
 interface IIcoToolTipProps {
   Icon: JSX.Element;
   title: string;
+  placement?: TooltipProps["placement"];
 }
 
 const BootstrapTooltip = styled(({ className, ...props }: TooltipProps) => (
@@ -21,10 +22,14 @@ const BootstrapTooltip = styled(({ className, ...props }: TooltipProps) => (
   },
 }));
 
-const IconToolTip: React.FC<IIcoToolTipProps> = ({ Icon, title }) => {
+const IconToolTip: React.FC<IIcoToolTipProps> = ({
+  Icon,
+  title,
+  placement = "top",
+}) => {
   return (
     <>
-      <BootstrapTooltip title={title} placement="top">
+      <BootstrapTooltip title={title} placement={placement}>
         <div className={styles.iconWrapper}>{Icon}</div>
       </BootstrapTooltip>
     </>
