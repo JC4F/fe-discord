@@ -1,72 +1,14 @@
 import React from "react";
 import { Button } from "@mui/material";
 import MainButtonExpand from "share/atoms/main-button-expand";
-import { IAllUser } from "page/chanels/me";
 import IconStateWrapper from "share/atoms/icon-state-wrapper";
 import { ReactComponent as CheckIcon } from "assest/svg/check.svg";
 import { ReactComponent as SearchNoResultIcon } from "assest/svg/search-no-result.svg";
 import { ReactComponent as CloseIcon } from "assest/svg/close.svg";
 import { useRefManager } from "hooks";
+import { useAppSelector } from "store/hooks";
+import { IUser } from "store/friend";
 import styles from "./index.module.css";
-
-const allUsers: IAllUser[] = [
-  {
-    userId: "1",
-    username: "Quan",
-    imageUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBqDiLJS8JtdilSrSns8zFI1OSCnnmZmY4m-JJ2BKN&s",
-    state: "ACTIVE",
-    extraInfo: "PLay Lol",
-  },
-  {
-    userId: "2",
-    username: "Quan1",
-    imageUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBqDiLJS8JtdilSrSns8zFI1OSCnnmZmY4m-JJ2BKN&s",
-    state: "BUSY",
-    extraInfo: "PLay Lol1",
-  },
-  {
-    userId: "3",
-    username: "Quan2",
-    imageUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBqDiLJS8JtdilSrSns8zFI1OSCnnmZmY4m-JJ2BKN&s",
-    state: "ACTIVE",
-    extraInfo: "PLay Lol2",
-  },
-  {
-    userId: "4",
-    username: "Quan",
-    imageUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBqDiLJS8JtdilSrSns8zFI1OSCnnmZmY4m-JJ2BKN&s",
-    state: "WAIT",
-    extraInfo: "PLay Lol3",
-  },
-  {
-    userId: "5",
-    username: "Long",
-    imageUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBqDiLJS8JtdilSrSns8zFI1OSCnnmZmY4m-JJ2BKN&s",
-    state: "WAIT",
-    extraInfo: "PLay Lol3",
-  },
-  {
-    userId: "6",
-    username: "Khoa",
-    imageUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBqDiLJS8JtdilSrSns8zFI1OSCnnmZmY4m-JJ2BKN&s",
-    state: "WAIT",
-    extraInfo: "PLay Lol3",
-  },
-  {
-    userId: "7",
-    username: "Hoang",
-    imageUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBqDiLJS8JtdilSrSns8zFI1OSCnnmZmY4m-JJ2BKN&s",
-    state: "WAIT",
-    extraInfo: "PLay Lol3",
-  },
-];
 
 interface ICreateGroupChatState {
   hoverId: string;
@@ -91,6 +33,7 @@ const initCGCWrapperRef: ICreateGroupChatRef = {
 };
 
 const CreateGroupChat: React.FC = () => {
+  const { friendList } = useAppSelector((state) => state.friend);
   const [cGCState, setCGCState] =
     React.useState<ICreateGroupChatState>(intitCGCState);
 
@@ -99,8 +42,8 @@ const CreateGroupChat: React.FC = () => {
   });
 
   React.useLayoutEffect(() => {
-    if (allUsers.length > 0)
-      setCGCState({ ...cGCState, hoverId: allUsers[0].userId });
+    if (friendList.length > 0)
+      setCGCState({ ...cGCState, hoverId: friendList[0].userId });
   }, []);
 
   React.useEffect(() => {
@@ -138,7 +81,7 @@ const CreateGroupChat: React.FC = () => {
   const handleWrapperKeyDown = React.useCallback(
     (
       e: React.KeyboardEvent<HTMLElement>,
-      userList: IAllUser[],
+      userList: IUser[],
       hoverId: string,
     ) => {
       if (userList.length === 0) return;
@@ -201,14 +144,14 @@ const CreateGroupChat: React.FC = () => {
   }, []);
 
   const curUsers = React.useMemo(() => {
-    return allUsers.filter((user) =>
+    return friendList.filter((user) =>
       user.username.toLowerCase().includes(cGCState.inputSearch.toLowerCase()),
     );
   }, [cGCState.inputSearch]);
 
   const chooseResult = React.useMemo(() => {
-    return allUsers.filter((user) => cGCState.chooseId.includes(user.userId));
-  }, [cGCState.chooseId, allUsers]);
+    return friendList.filter((user) => cGCState.chooseId.includes(user.userId));
+  }, [cGCState.chooseId, friendList]);
 
   return (
     <div
@@ -220,7 +163,7 @@ const CreateGroupChat: React.FC = () => {
     >
       <div className={styles.searchWrapper}>
         <h1>Chọn Bạn Bè</h1>
-        <span>Bạn có thể thêm {allUsers.length} người bạn nữa.</span>
+        <span>Bạn có thể thêm {friendList.length} người bạn nữa.</span>
         <div className={styles.inputResultWrapper}>
           {chooseResult.length > 0 &&
             chooseResult.map((user) => (

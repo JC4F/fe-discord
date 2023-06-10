@@ -48,10 +48,12 @@
 
 .buttonWrapper:hover {
   background-color: var(--brand-experiment);
+  border-radius: 18px;
 }
 
 .buttonWrapperChoosen {
   background-color: var(--brand-experiment);
+  border-radius: 18px;
 }
 
 .customName {
@@ -123,6 +125,12 @@
   right: -4px;
   min-width: 12px;
   min-height: 12px;
+}
+
+.iconWrapperCTS,
+.iconWrapperCTM,
+iconWrapperCTL {
+  display: flex;
 }
 
 .iconWrapperCT svg {

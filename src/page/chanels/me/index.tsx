@@ -15,13 +15,14 @@ import { ReactComponent as OtherChoiceIcon } from "assest/svg/other-choice.svg";
 import { ReactComponent as AcceptIcon } from "assest/svg/accept.svg";
 import { ReactComponent as RemoveBlockIcon } from "assest/svg/remove-block.svg";
 import MainButtonExpand from "share/atoms/main-button-expand";
-import { IUserState } from "store/authen/type";
 import IconStateWrapper from "share/atoms/icon-state-wrapper";
 import IconToolTip from "share/atoms/icon-tooltip";
 import { Button } from "@mui/material";
 import CustomTooltipDialog from "share/atoms/custom-tooltip-dialog";
-import styles from "./index.module.css";
 import CreateGroupChat from "share/molecules/create-group-chat";
+import { useAppSelector } from "store/hooks";
+import { IUser } from "store/friend";
+import styles from "./index.module.css";
 
 const NoFriend = () => {
   return (
@@ -34,6 +35,14 @@ const NoFriend = () => {
 
 type IFriendChoosing = "ACTIVE" | "ALL" | "PENDING" | "BLOCKED" | "ADD-MORE";
 
+const friendActionState: IFriendChoosing[] = [
+  "ACTIVE",
+  "ALL",
+  "PENDING",
+  "BLOCKED",
+  "ADD-MORE",
+];
+
 type ITabsState = {
   [key in IFriendChoosing]: {
     search: string;
@@ -45,7 +54,7 @@ interface IMeState {
   dialogOpen: boolean;
   friendChoosing: IFriendChoosing;
   tabsState: ITabsState;
-  userList: IAllUser[];
+  userList: IUser[];
 }
 
 const initMeState: IMeState = {
@@ -76,88 +85,21 @@ const initMeState: IMeState = {
   userList: [],
 };
 
-// fake data lấy từ context sau khi f5 hoặc login chẳng hạn, mảng all user
-export interface IAllUser {
-  userId: string;
-  username: string;
-  imageUrl: string;
-  state: IUserState;
-  extraInfo?: string;
-}
-
-const pendingBlockUsers: IAllUser[] = [
-  {
-    userId: "1",
-    username: "Quan",
-    imageUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBqDiLJS8JtdilSrSns8zFI1OSCnnmZmY4m-JJ2BKN&s",
-    state: "NONE",
-  },
-  {
-    userId: "2",
-    username: "Quan222",
-    imageUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBqDiLJS8JtdilSrSns8zFI1OSCnnmZmY4m-JJ2BKN&s",
-    state: "NONE",
-  },
-];
-
-const allUsers: IAllUser[] = [
-  {
-    userId: "1",
-    username: "Quan",
-    imageUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBqDiLJS8JtdilSrSns8zFI1OSCnnmZmY4m-JJ2BKN&s",
-    state: "ACTIVE",
-    extraInfo: "PLay Lol",
-  },
-  {
-    userId: "2",
-    username: "Quan1",
-    imageUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBqDiLJS8JtdilSrSns8zFI1OSCnnmZmY4m-JJ2BKN&s",
-    state: "BUSY",
-    extraInfo: "PLay Lol1",
-  },
-  {
-    userId: "3",
-    username: "Quan2",
-    imageUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBqDiLJS8JtdilSrSns8zFI1OSCnnmZmY4m-JJ2BKN&s",
-    state: "ACTIVE",
-    extraInfo: "PLay Lol2",
-  },
-  {
-    userId: "4",
-    username: "Quan",
-    imageUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBqDiLJS8JtdilSrSns8zFI1OSCnnmZmY4m-JJ2BKN&s",
-    state: "WAIT",
-    extraInfo: "PLay Lol3",
-  },
-];
-
-const friendActionState: IFriendChoosing[] = [
-  "ACTIVE",
-  "ALL",
-  "PENDING",
-  "BLOCKED",
-  "ADD-MORE",
-];
-
 // Mấy state user này ở trong me, nên sẽ thực hiện request ở trong này
 // socketio có thể gọi đến đây để thay đổi user
 const Me: React.FC = () => {
+  const { friendList, blockingUsers, pendingUsers } = useAppSelector(
+    (state) => state.friend,
+  );
   const [meState, setMeState] = React.useState<IMeState>(initMeState);
 
   React.useLayoutEffect(() => {
-    let userList: IAllUser[] = [];
+    let userList: IUser[] = [];
     if (meState.friendChoosing === "ACTIVE" || meState.friendChoosing === "ALL")
-      userList = [...allUsers];
+      userList = [...friendList];
     else if (meState.friendChoosing === "BLOCKED")
-      userList = [...pendingBlockUsers];
-    else if (meState.friendChoosing === "PENDING")
-      userList = [...pendingBlockUsers];
+      userList = [...blockingUsers];
+    else if (meState.friendChoosing === "PENDING") userList = [...pendingUsers];
 
     setMeState((pre) => ({
       ...pre,
@@ -172,8 +114,8 @@ const Me: React.FC = () => {
     }));
   }, [meState.friendChoosing]);
 
-  const usersProcessing: IAllUser[] = React.useMemo(() => {
-    let userListTemp: IAllUser[] = [];
+  const usersProcessing: IUser[] = React.useMemo(() => {
+    let userListTemp: IUser[] = [];
 
     if (["ALL", "PENDING", "BLOCKED"].includes(meState.friendChoosing)) {
       userListTemp = [...meState.userList];
@@ -326,7 +268,7 @@ const Me: React.FC = () => {
                 {
                   Icon: (
                     <div className={styles.haveNotify}>
-                      {pendingBlockUsers.length}
+                      {pendingUsers.length}
                     </div>
                   ),
                   isShownOnHover: false,
@@ -371,8 +313,8 @@ const Me: React.FC = () => {
               />
             </h2>
 
-            {allUsers.length > 0 &&
-              allUsers.map((user) => (
+            {friendList.length > 0 &&
+              friendList.map((user) => (
                 <MainButtonExpand
                   key={user.userId}
                   mainButtonProps={{
@@ -420,9 +362,9 @@ const Me: React.FC = () => {
                         onClick={() => handleChangeFriendChoosing(item)}
                       >
                         {getFriendText(item)}
-                        {pendingBlockUsers.length > 0 && (
+                        {pendingUsers.length > 0 && (
                           <div className={styles.haveNotify}>
-                            {pendingBlockUsers.length}
+                            {pendingUsers.length}
                           </div>
                         )}
                       </div>
