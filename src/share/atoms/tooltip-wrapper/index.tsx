@@ -3,10 +3,11 @@ import { styled } from "@mui/material/styles";
 import { Tooltip, TooltipProps, tooltipClasses } from "@mui/material";
 import styles from "./index.module.css";
 
-interface IIcoToolTipProps {
-  Icon: JSX.Element;
+interface IToolTipWrapperProps {
+  content: JSX.Element;
   title: string;
   placement?: TooltipProps["placement"];
+  isIcon?: boolean;
 }
 
 const BootstrapTooltip = styled(({ className, ...props }: TooltipProps) => (
@@ -22,18 +23,23 @@ const BootstrapTooltip = styled(({ className, ...props }: TooltipProps) => (
   },
 }));
 
-const IconToolTip: React.FC<IIcoToolTipProps> = ({
-  Icon,
+const ToolTipWrapper: React.FC<IToolTipWrapperProps> = ({
+  content,
   title,
   placement = "top",
+  isIcon = true,
 }) => {
   return (
     <>
       <BootstrapTooltip title={title} placement={placement}>
-        <div className={styles.iconWrapper}>{Icon}</div>
+        {isIcon ? (
+          <div className={styles.iconWrapper}>{content}</div>
+        ) : (
+          <div>{content}</div>
+        )}
       </BootstrapTooltip>
     </>
   );
 };
 
-export default IconToolTip;
+export default ToolTipWrapper;

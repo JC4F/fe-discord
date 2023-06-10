@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import styles from "./index.module.css";
-import IconToolTip from "../icon-tooltip";
+import ToolTipWrapper from "../tooltip-wrapper";
 
 interface ICustomDialogProps {
   dialogContent: JSX.Element;
@@ -58,10 +58,10 @@ const CustomTooltipDialog: React.FC<ICustomDialogProps> = ({
           title={dialogContent}
         >
           <div onClick={handleTooltipOpen}>
-            <IconToolTip
+            <ToolTipWrapper
               title={nestTitle ?? ""}
               placement={nestPlacement}
-              Icon={tooltipContent}
+              content={tooltipContent}
             />
           </div>
         </DialogTooltip>

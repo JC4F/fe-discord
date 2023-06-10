@@ -16,7 +16,7 @@ import { ReactComponent as AcceptIcon } from "assest/svg/accept.svg";
 import { ReactComponent as RemoveBlockIcon } from "assest/svg/remove-block.svg";
 import MainButtonExpand from "share/atoms/main-button-expand";
 import IconStateWrapper from "share/atoms/icon-state-wrapper";
-import IconToolTip from "share/atoms/icon-tooltip";
+import ToolTipWrapper from "share/atoms/tooltip-wrapper";
 import { Button } from "@mui/material";
 import CustomTooltipDialog from "share/atoms/custom-tooltip-dialog";
 import CreateGroupChat from "share/molecules/create-group-chat";
@@ -205,11 +205,13 @@ const Me: React.FC = () => {
       if (choosingState === "PENDING")
         return [
           {
-            Icon: <IconToolTip Icon={<AcceptIcon />} title={"Chấp nhận"} />,
+            Icon: (
+              <ToolTipWrapper content={<AcceptIcon />} title={"Chấp nhận"} />
+            ),
             isShownOnHover: false,
           },
           {
-            Icon: <IconToolTip Icon={<CloseIcon />} title={"Bỏ qua"} />,
+            Icon: <ToolTipWrapper content={<CloseIcon />} title={"Bỏ qua"} />,
             isShownOnHover: false,
           },
         ];
@@ -217,7 +219,10 @@ const Me: React.FC = () => {
         return [
           {
             Icon: (
-              <IconToolTip Icon={<RemoveBlockIcon />} title={"Chấp nhận"} />
+              <ToolTipWrapper
+                content={<RemoveBlockIcon />}
+                title={"Chấp nhận"}
+              />
             ),
             isShownOnHover: false,
           },
@@ -225,13 +230,15 @@ const Me: React.FC = () => {
       else
         return [
           {
-            Icon: <IconToolTip Icon={<MessageIcon />} title={"Nhắn tin"} />,
+            Icon: (
+              <ToolTipWrapper content={<MessageIcon />} title={"Nhắn tin"} />
+            ),
             isShownOnHover: false,
           },
           {
             Icon: (
-              <IconToolTip
-                Icon={<OtherChoiceIcon />}
+              <ToolTipWrapper
+                content={<OtherChoiceIcon />}
                 title={"Những mục khác"}
               />
             ),

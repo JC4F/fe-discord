@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from "store/hooks";
 import { useNavigate } from "react-router-dom";
 import { IServerItem, updatechoosingServerId } from "store/server";
 import styles from "./index.module.css";
+import ToolTipWrapper from "share/atoms/tooltip-wrapper";
 
 const SidebarServer: React.FC = () => {
   const { userId } = useAppSelector((state) => state.authen.user);
@@ -19,18 +20,18 @@ const SidebarServer: React.FC = () => {
   // const [sBState, setSBState] = React.useState<ISideBarState>(initSideBarState);
   const navigate = useNavigate();
 
-  const getIconList = React.useCallback((serverItem: IServerItem) => {
+  const getIconList = React.useCallback((server: IServerItem) => {
     const iconList: IMainButtonIcon[] = [];
-    if (serverItem.isEventing) {
+    if (server.isEventing) {
       iconList.push({
         Icon: <IconWrapper content={<Event />} />,
         iconPosition: "TOP-RIGHT",
       });
     }
 
-    if (serverItem.numNotify && serverItem.numNotify > 0) {
+    if (server.numNotify && server.numNotify > 0) {
       iconList.push({
-        Icon: <IconWrapper content={`${serverItem.numNotify}`} />,
+        Icon: <IconWrapper content={`${server.numNotify}`} />,
         iconPosition: "BOTTOM-RIGHT",
       });
     }
@@ -38,13 +39,29 @@ const SidebarServer: React.FC = () => {
     return iconList;
   }, []);
 
+  const getServerName = React.useCallback((server: IServerItem) => {
+    if (server.serverName) return server.serverName;
+    else return `Máy chủ của ${server.hostName}`;
+  }, []);
+
   const handleClickDiscordLogo = React.useCallback(() => {
     dispatch(updatechoosingServerId({ choosingServerId: "" }));
     navigate("/chanels/@me");
   }, []);
 
-  const handleClickChooseServer = React.useCallback((serverId: string) => {
-    dispatch(updatechoosingServerId({ choosingServerId: serverId }));
+  const handleClickChooseServer = React.useCallback((server: IServerItem) => {
+    let navigateRoute = server.serverId;
+    if (
+      server.directoryChanelList.length > 0 &&
+      server.directoryChanelList[0].chanelList.length > 0 &&
+      server.directoryChanelList[0].chanelList[0].chanelId
+    ) {
+      navigateRoute = `/chanels/${navigateRoute}/${server.directoryChanelList[0].chanelList[0].chanelId}`;
+      console.log(navigateRoute);
+    }
+
+    dispatch(updatechoosingServerId({ choosingServerId: server.serverId }));
+    navigate(navigateRoute);
   }, []);
 
   const handleCreateNewServer = React.useCallback(() => {}, [userId]);
@@ -65,13 +82,20 @@ const SidebarServer: React.FC = () => {
       />
       {serverList.length > 0 &&
         serverList.map((server) => (
-          <MainButton
+          <ToolTipWrapper
             key={server.serverId}
-            name={server.serverName}
-            imageUrl={server.imageUrl}
-            iconList={getIconList(server)}
-            handleClick={() => handleClickChooseServer(server.serverId)}
-            isButtonChoosen={server.serverId === choosingServerId}
+            content={
+              <MainButton
+                name={getServerName(server)}
+                imageUrl={server.imageUrl}
+                iconList={getIconList(server)}
+                handleClick={() => handleClickChooseServer(server)}
+                isButtonChoosen={server.serverId === choosingServerId}
+              />
+            }
+            title={getServerName(server)}
+            isIcon={false}
+            placement="right"
           />
         ))}
       <MainButton
