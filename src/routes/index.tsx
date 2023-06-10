@@ -11,7 +11,7 @@ import { SocialAuthCallback } from "page/authen-redirect";
 import Me from "page/chanels/me";
 import Store from "page/chanels/me/store";
 import RoomChat from "page/chanels/me/room-chat";
-import Chanel from "page/chanels/chanel";
+import ServerChanel from "page/chanels/server";
 
 const AppRoutes: React.FC = () => {
   return (
@@ -36,7 +36,7 @@ const AppRoutes: React.FC = () => {
           <Route path="store" element={<Store />} />
           <Route path=":roomChatId" element={<RoomChat />} />
         </Route>
-        <Route path=":serverId/:chanelId" element={<Chanel />} />
+        <Route path=":serverId/:chanelId" element={<ServerChanel />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>
