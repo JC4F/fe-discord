@@ -4,13 +4,13 @@ import {
   type Action,
 } from "@reduxjs/toolkit";
 import authenReducer from "./authen";
-import chanelReducer from "./chanel";
+import serverReducer from "./server";
 import friendReducer from "./friend";
 
 export const store = configureStore({
   reducer: {
     authen: authenReducer,
-    chanel: chanelReducer,
+    server: serverReducer,
     friend: friendReducer,
   },
 });

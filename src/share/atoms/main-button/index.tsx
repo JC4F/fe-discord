@@ -14,7 +14,7 @@ export interface IMainButtonIcon {
 
 export interface IMainButtonProps extends React.PropsWithChildren {
   name?: string;
-  isChanelChoosen?: boolean;
+  isButtonChoosen?: boolean;
   iconList?: IMainButtonIcon[];
   imageUrl?: string;
   buttonSize?: "BIG" | "MEDIUM" | "SMALL";
@@ -24,7 +24,7 @@ export interface IMainButtonProps extends React.PropsWithChildren {
 
 const MainButton: React.FC<IMainButtonProps> = ({
   name,
-  isChanelChoosen = false,
+  isButtonChoosen = false,
   iconList,
   imageUrl,
   buttonSize = "MEDIUM",
@@ -76,7 +76,7 @@ const MainButton: React.FC<IMainButtonProps> = ({
         className={
           disabledHover
             ? styles.buttonDisableHover
-            : isChanelChoosen
+            : isButtonChoosen
             ? styles.buttonWrapperChoosen
             : styles.buttonWrapper
         }

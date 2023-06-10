@@ -1,5 +1,5 @@
 import React from "react";
-import SidebarChanels from "../sidebar-chanels";
+import SidebarServer from "../sidebar-servers";
 import MediaControl from "share/atoms/medial-control";
 import styles from "./index.module.css";
 
@@ -19,7 +19,7 @@ const MainLayout: React.FC<IMainLayoutProps> = ({
   return (
     <div className={styles.mainLayoutWrapper}>
       <div className={styles.sidebarChanel}>
-        <SidebarChanels />
+        <SidebarServer />
       </div>
       <div className={styles.nextSidebarChanel}>
         <div className={styles.nextHead}>{NextHeadEle}</div>

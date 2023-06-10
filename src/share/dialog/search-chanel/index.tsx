@@ -2,12 +2,12 @@ import React from "react";
 import { Dialog, DialogContent } from "@mui/material";
 import styles from "./index.module.css";
 
-interface ISearchDialogProps {
+interface ISearchServerChanelDialogProps {
   isOpen: boolean;
   handleCloseDialog: (makeOpen: boolean) => void;
 }
 
-const SearchChanelDialog: React.FC<ISearchDialogProps> = ({
+const SearchServerChanelDialog: React.FC<ISearchServerChanelDialogProps> = ({
   isOpen,
   handleCloseDialog,
 }) => {
@@ -45,4 +45,4 @@ const SearchChanelDialog: React.FC<ISearchDialogProps> = ({
   );
 };
 
-export default SearchChanelDialog;
+export default SearchServerChanelDialog;

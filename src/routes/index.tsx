@@ -12,7 +12,6 @@ import Me from "page/chanels/me";
 import Store from "page/chanels/me/store";
 import RoomChat from "page/chanels/me/room-chat";
 import Chanel from "page/chanels/chanel";
-import SubChanel from "page/chanels/chanel/sub-chanel";
 
 const AppRoutes: React.FC = () => {
   return (
@@ -37,9 +36,7 @@ const AppRoutes: React.FC = () => {
           <Route path="store" element={<Store />} />
           <Route path=":roomChatId" element={<RoomChat />} />
         </Route>
-        <Route path=":chanelId" element={<Chanel />}>
-          <Route path=":subChanelId" element={<SubChanel />} />
-        </Route>
+        <Route path=":serverId/:chanelId" element={<Chanel />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>

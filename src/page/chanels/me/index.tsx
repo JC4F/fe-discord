@@ -1,6 +1,6 @@
 import React from "react";
 import MainLayout from "share/molecules/main-layout";
-import SearchChanelDialog from "share/dialog/search-chanel";
+import SearchServerChanelDialog from "share/dialog/search-chanel";
 import { ReactComponent as FriendIcon } from "assest/svg/friend.svg";
 import { ReactComponent as CreateGroupChatIcon } from "assest/svg/create-new-group-chat.svg";
 import { ReactComponent as MailComingIcon } from "assest/svg/new-coming-mail.svg";
@@ -563,7 +563,7 @@ const Me: React.FC = () => {
           </>
         }
       />
-      <SearchChanelDialog
+      <SearchServerChanelDialog
         isOpen={meState.dialogOpen}
         handleCloseDialog={handleHeadDialogFind}
       />

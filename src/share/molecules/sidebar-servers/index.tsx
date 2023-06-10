@@ -7,30 +7,30 @@ import { ReactComponent as Discover } from "assest/svg/discover-1-svgrepo-com.sv
 import IconWrapper from "share/atoms/icon-wrapper";
 import { useAppDispatch, useAppSelector } from "store/hooks";
 import { useNavigate } from "react-router-dom";
-import { IChanelItem, updateChoosingChanelId } from "store/chanel";
+import { IServerItem, updatechoosingServerId } from "store/server";
 import styles from "./index.module.css";
 
-const SidebarChanels: React.FC = () => {
+const SidebarServer: React.FC = () => {
   const { userId } = useAppSelector((state) => state.authen.user);
-  const { chanelList, choosingChanelId } = useAppSelector(
-    (state) => state.chanel,
+  const { serverList, choosingServerId } = useAppSelector(
+    (state) => state.server,
   );
   const dispatch = useAppDispatch();
   // const [sBState, setSBState] = React.useState<ISideBarState>(initSideBarState);
   const navigate = useNavigate();
 
-  const getIconList = React.useCallback((chanelItem: IChanelItem) => {
+  const getIconList = React.useCallback((serverItem: IServerItem) => {
     const iconList: IMainButtonIcon[] = [];
-    if (chanelItem.isEventing) {
+    if (serverItem.isEventing) {
       iconList.push({
         Icon: <IconWrapper content={<Event />} />,
         iconPosition: "TOP-RIGHT",
       });
     }
 
-    if (chanelItem.numNotify && chanelItem.numNotify > 0) {
+    if (serverItem.numNotify && serverItem.numNotify > 0) {
       iconList.push({
-        Icon: <IconWrapper content={`${chanelItem.numNotify}`} />,
+        Icon: <IconWrapper content={`${serverItem.numNotify}`} />,
         iconPosition: "BOTTOM-RIGHT",
       });
     }
@@ -39,15 +39,15 @@ const SidebarChanels: React.FC = () => {
   }, []);
 
   const handleClickDiscordLogo = React.useCallback(() => {
-    dispatch(updateChoosingChanelId({ choosingChanelId: "" }));
+    dispatch(updatechoosingServerId({ choosingServerId: "" }));
     navigate("/chanels/@me");
   }, []);
 
-  const handleClickChooseChanel = React.useCallback((chanelId: string) => {
-    dispatch(updateChoosingChanelId({ choosingChanelId: chanelId }));
+  const handleClickChooseServer = React.useCallback((serverId: string) => {
+    dispatch(updatechoosingServerId({ choosingServerId: serverId }));
   }, []);
 
-  const handleCreateNewChanel = React.useCallback(() => {}, [userId]);
+  const handleCreateNewServer = React.useCallback(() => {}, [userId]);
 
   const handleDiscover = React.useCallback(() => {}, [userId]);
 
@@ -61,17 +61,17 @@ const SidebarChanels: React.FC = () => {
           },
         ]}
         handleClick={handleClickDiscordLogo}
-        isChanelChoosen={choosingChanelId === ""}
+        isButtonChoosen={choosingServerId === ""}
       />
-      {chanelList.length > 0 &&
-        chanelList.map((chanel) => (
+      {serverList.length > 0 &&
+        serverList.map((server) => (
           <MainButton
-            key={chanel.chanelId}
-            name={chanel.chanelName}
-            imageUrl={chanel.imageUrl}
-            iconList={getIconList(chanel)}
-            handleClick={() => handleClickChooseChanel(chanel.chanelId)}
-            isChanelChoosen={chanel.chanelId === choosingChanelId}
+            key={server.serverId}
+            name={server.serverName}
+            imageUrl={server.imageUrl}
+            iconList={getIconList(server)}
+            handleClick={() => handleClickChooseServer(server.serverId)}
+            isButtonChoosen={server.serverId === choosingServerId}
           />
         ))}
       <MainButton
@@ -81,7 +81,7 @@ const SidebarChanels: React.FC = () => {
             iconPosition: "CENTER",
           },
         ]}
-        handleClick={handleCreateNewChanel}
+        handleClick={handleCreateNewServer}
       />
       <MainButton
         iconList={[
@@ -96,4 +96,4 @@ const SidebarChanels: React.FC = () => {
   );
 };
 
-export default SidebarChanels;
+export default SidebarServer;
